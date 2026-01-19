@@ -30,7 +30,9 @@
       color: #1F3C6D;
     }
 
+    /* Viewer container */
     #viewer {
+      position: relative;                 /* ← 로딩 레이어 기준 */
       width: 100%;
       max-width: 800px;
       height: calc(100vh - 120px);
@@ -41,37 +43,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-       position: relative;
+      background: #ffffff;
     }
-
-#loading {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.85);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  font-size: 14px;
-  color: #1F3C6D;
-}
-
-.spinner {
-  width: 32px;
-  height: 32px;
-  border: 4px solid #dce3ec;
-  border-top-color: #0B5FA5;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 10px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-    
 
     canvas {
       max-width: 100%;
@@ -81,6 +54,34 @@
       display: block;
       transition: opacity 0.2s ease;
       opacity: 1;
+    }
+
+    /* Loading overlay */
+    #loading {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      font-size: 14px;
+      color: #1F3C6D;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 4px solid #dce3ec;
+      border-top-color: #0B5FA5;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     .controls {
@@ -106,12 +107,13 @@
 <header>December 2025 Newsletter (Arabic)</header>
 
 <div id="viewer">
-<div id="loading">
-  <div class="spinner"></div>
-  <div class="loading-text">Loading newsletter…</div>
-</div>
-  
-  
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <div>Loading newsletter…</div>
+  </div>
+
+  <!-- Canvas -->
   <canvas id="pdf-canvas"></canvas>
 </div>
 
@@ -131,6 +133,7 @@
   const container = document.getElementById("viewer");
   const canvas = document.getElementById("pdf-canvas");
   const ctx = canvas.getContext("2d");
+  const loading = document.getElementById("loading");
 
   pdfjsLib.getDocument({
     url: url,
@@ -145,8 +148,8 @@
     if (rendering || !pdfDoc) return;
     rendering = true;
 
-    /* ✅ 페이드 아웃 (전환 시작) */
     canvas.style.opacity = 0;
+    loading.style.display = "flex";
 
     pdfDoc.getPage(num).then(page => {
       const unscaledViewport = page.getViewport({ scale: 1 });
@@ -170,10 +173,8 @@
         viewport: viewport
       }).promise.then(() => {
         rendering = false;
-
-        /* ✅ 페이드 인 (렌더 완료) */
         canvas.style.opacity = 1;
-
+        loading.style.display = "none";
         updateButtons();
       });
     });
@@ -194,13 +195,11 @@
   };
 
   function updateButtons() {
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
-
-    prevBtn.disabled = (pageNum <= 1);
-    nextBtn.disabled = (pdfDoc && pageNum >= pdfDoc.numPages);
+    document.getElementById("prev").disabled = (pageNum <= 1);
+    document.getElementById("next").disabled = (pageNum >= pdfDoc.numPages);
   }
 
+  /* Resize 대응 */
   const resizeObserver = new ResizeObserver(() => {
     baseScale = null;
     renderPage(pageNum);
