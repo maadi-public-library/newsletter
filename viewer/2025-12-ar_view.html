@@ -41,7 +41,37 @@
       display: flex;
       align-items: center;
       justify-content: center;
+       position: relative;
     }
+
+#loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  font-size: 14px;
+  color: #1F3C6D;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #dce3ec;
+  border-top-color: #0B5FA5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+    
 
     canvas {
       max-width: 100%;
@@ -76,6 +106,12 @@
 <header>December 2025 Newsletter (Arabic)</header>
 
 <div id="viewer">
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading newsletter…</div>
+</div>
+  
+  
   <canvas id="pdf-canvas"></canvas>
 </div>
 
