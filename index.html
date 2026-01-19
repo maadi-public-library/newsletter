@@ -91,7 +91,21 @@
       font-size: 13px;
       color: #555;
     }
+.footer-credit {
+  font-size: 13px;
+  color: #555;
+}
 
+.partner {
+  display: inline-flex;
+  align-items: center;   /* ← 이 줄이 정답 */
+  margin-left: 4px;
+}
+
+.partner img {
+  height: 10px;
+  width: auto;
+}
 
 /* === FORCE OVERRIDE FOR FOOTER LOGO LINK === */
 footer .footer-logo a {
@@ -243,16 +257,14 @@ footer .footer-logo a img {
 
     <!-- Footer -->
     <footer>
-<p>
+<p class="footer-credit">
   This publication is produced in collaboration with
-  <span class="footer-logo">
-    <a href="https://www.koica.go.kr/sites/koica_en/index.do"
-       target="_blank"
-       rel="noopener noreferrer">
-      <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
-    </a>
+  <span class="partner">
+    <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
   </span>
 </p>
+
+      
 </footer>
 
 
