@@ -98,11 +98,24 @@
     /* Footer */
     footer {
       margin-top: 60px;
-      padding-top: 20px;
+      padding-top: 25px;
       border-top: 1px solid #ddd;
-      font-size: 13px;
-      color: #777;
       text-align: center;
+    }
+
+    .footer-logo {
+      margin-bottom: 10px;
+    }
+
+    .footer-logo img {
+      max-height: 50px;
+      object-fit: contain;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 13px;
+      color: #555;
     }
   </style>
 </head>
@@ -113,7 +126,7 @@
     <!-- Logos -->
     <div class="top-bar">
       <img src="assets/logos/Maadi_Public_Library_logo.png" alt="Maadi Public Library Logo">
-      <img src="assets/logos/escd_logo.png" alt="ESCD Logo">
+      <img src="assets/logos/ESCD_logo.png" alt="ESCD Logo">
     </div>
 
     <!-- Title -->
@@ -122,19 +135,7 @@
       <p>Monthly Newsletter Archive (PDF)</p>
     </header>
 
-    <!-- 2026 -->
-    <section>
-      <h2>2026</h2>
-      <ul>
-        <li>
-          <a href="2026/01/maadi-2026-01.pdf" target="_blank">
-            January 2026 Newsletter
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <!-- 2025 -->
+    <!-- 2025 (TOP) -->
     <section>
       <h2>2025</h2>
       <ul>
@@ -146,8 +147,27 @@
       </ul>
     </section>
 
+    <!-- 2026 (BOTTOM) -->
+    <section>
+      <h2>2026</h2>
+      <ul>
+        <li>
+          <a href="2026/01/maadi-2026-01.pdf" target="_blank">
+            January 2026 Newsletter
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
     <footer>
-      © Maadi Public Library. All newsletters are provided in PDF format.
+      <div class="footer-logo">
+        <img src="assets/logos/KOICA_logo.png" alt="KOICA Logo">
+      </div>
+      <p>
+        This newsletter archive is produced through a collaborative partnership
+        between Maadi Public Library and the Korea International Cooperation Agency (KOICA).
+      </p>
     </footer>
 
   </div>
