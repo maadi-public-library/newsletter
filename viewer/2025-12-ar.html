@@ -75,27 +75,31 @@
     renderPage(pageNum);
   });
 
+let isFirstRender = true;
+
 function renderPage(num) {
   pdfDoc.getPage(num).then(function (page) {
-
     const container = document.getElementById("viewer");
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
 
-    // PDF 원본 viewport (scale 1 = 1:1 비율)
     const unscaledViewport = page.getViewport({ scale: 1 });
 
-    // 컨테이너 폭 기준으로 자동 스케일 계산
-    const scale = container.clientWidth / unscaledViewport.width;
+    // 첫 로딩은 빠르게 (저해상도)
+    let scale;
+    if (isFirstRender) {
+      scale = (container.clientWidth / unscaledViewport.width) * 0.7;
+    } else {
+      scale = container.clientWidth / unscaledViewport.width;
+    }
 
-    const viewport = page.getViewport({ scale: scale });
+    const viewport = page.getViewport({ scale });
 
     canvas.width = viewport.width;
     canvas.height = viewport.height;
 
-    page.render({
-      canvasContext: ctx,
-      viewport: viewport
+    page.render({ canvasContext: ctx, viewport }).promise.then(() => {
+      isFirstRender = false;
     });
   });
 }
