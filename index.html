@@ -147,14 +147,13 @@ footer .footer-logo a img {
   color: var(--dark-blue);
 }
 
-    .header-title .subtitle {
-  margin: 6px 0 0;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: 0.5px;
-  color: #666;
+.header-title .subtitle {
+  margin: 8px 0 0;
+  font-size: 26px;          /* ← section h2(20px)보다 큼 */
+  font-weight: 600;
+  color: var(--dark-blue);
+  letter-spacing: 0.3px;
 }
-
 @media (max-width: 700px) {
   .header-bar {
     grid-template-columns: 1fr;
@@ -182,9 +181,9 @@ footer .footer-logo a img {
     <img src="assets/logos/ESCD_logo.png" alt="ESCD Logo">
   </div>
 
- <div class="header-title">
+<div class="header-title">
   <h1>Maadi Public Library</h1>
-  <p class="subtitle">Monthly Newsletter Archive</p>
+  <h2 class="subtitle">Monthly Newsletter Archive</h2>
 </div>
 
   <div class="header-logo right">
