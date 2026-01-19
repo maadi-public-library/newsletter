@@ -108,6 +108,9 @@ function renderPage(num) {
   document.getElementById("next").onclick = () => {
     if (pageNum < pdfDoc.numPages) renderPage(++pageNum);
   };
+
+window.addEventListener("resize", () => renderPage(pageNum));
+  
 </script>
 
 </body>
