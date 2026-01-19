@@ -113,7 +113,47 @@ function renderPage(num) {
     if (pageNum < pdfDoc.numPages) renderPage(++pageNum);
   };
 
-window.addEventListener("resize", () => renderPage(pageNum));
+let pdfDoc = null;
+let pageNum = 1;
+let rendering = false;
+
+const canvas = document.getElementById("pdf-canvas");
+const ctx = canvas.getContext("2d");
+const container = document.getElementById("viewer");
+
+function renderPage(num) {
+  if (rendering || !pdfDoc) return;
+  rendering = true;
+
+  pdfDoc.getPage(num).then(page => {
+    const unscaledViewport = page.getViewport({ scale: 1 });
+
+    // container 폭이 아직 0이면 다시 시도
+    if (container.clientWidth === 0) {
+      rendering = false;
+      requestAnimationFrame(() => renderPage(num));
+      return;
+    }
+
+    const scale = container.clientWidth / unscaledViewport.width;
+    const viewport = page.getViewport({ scale });
+
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+
+    page.render({ canvasContext: ctx, viewport }).promise.then(() => {
+      rendering = false;
+    });
+  });
+}
+
+/* ResizeObserver로 실제 크기 변경 감지 */
+const resizeObserver = new ResizeObserver(() => {
+  renderPage(pageNum);
+});
+
+resizeObserver.observe(container);
+
   
 </script>
 
