@@ -83,8 +83,7 @@
 .footer-logo img {
   height: 10px;
   width: auto;
-  margin: 0 4px;
-  vertical-align: middle;
+  vertical-align: middle; /* ← 핵심 */
 }
 
     footer p {
@@ -154,6 +153,7 @@ footer .footer-logo a img {
   color: var(--dark-blue);
   letter-spacing: 0.3px;
 }
+    
 @media (max-width: 700px) {
   .header-bar {
     grid-template-columns: 1fr;
@@ -244,15 +244,12 @@ footer .footer-logo a img {
     <!-- Footer -->
     <footer>
 <p>
-  This publication is produced in collaboration with<span class="footer-logo">
+  This publication is produced in collaboration with
+  <span class="footer-logo">
     <a href="https://www.koica.go.kr/sites/koica_en/index.do"
        target="_blank"
        rel="noopener noreferrer">
-      <img
-        src="assets/logos/KOICA_logo_s.png"
-        alt="KOICA"
-        title="Korea International Cooperation Agency"
-      >
+      <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
     </a>
   </span>
 </p>
