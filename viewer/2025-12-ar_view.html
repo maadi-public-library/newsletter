@@ -63,6 +63,11 @@ button {
   cursor: pointer;
 }
 
+    button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
   </style>
 </head>
 
@@ -127,6 +132,7 @@ button {
         viewport: viewport
       }).promise.then(() => {
         rendering = false;
+        updateButtons(); 
       });
     });
   }
@@ -153,6 +159,16 @@ button {
   });
 
   resizeObserver.observe(container);
+
+
+function updateButtons() {
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+
+  prevBtn.disabled = (pageNum <= 1);
+  nextBtn.disabled = (pdfDoc && pageNum >= pdfDoc.numPages);
+}
+  
 </script>
 
 
