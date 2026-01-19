@@ -169,32 +169,34 @@ footer .footer-logo a img {
 }
     
 @media (max-width: 700px) {
-  .header-bar {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 15px;
+  .library-photo {
+    height: 180px;
+    margin-bottom: 30px;
   }
+}
 
   .header-logo.left,
   .header-logo.right {
     text-align: center;
   }
 }
-/* === Library Exterior Photo === */
+
+    /* === Library Exterior Photo === */
 .library-photo {
-  margin: 0 0 40px;
-  text-align: center;
+  width: 100%;
+  max-width: 960px;
+  height: 240px;              /* ← 핵심: 세로 높이 제한 */
+  margin: 0 auto 40px;
+  overflow: hidden;           /* ← 넘치는 부분 자르기 */
+  border-radius: 6px;
 }
 
 .library-photo img {
   width: 100%;
-  max-width: 960px;   /* container 폭과 정렬 */
-  height: auto;
-  border-radius: 6px;
+  height: 100%;
+  object-fit: cover;          /* ← 비율 유지 + 중앙 크롭 */
   display: block;
-  margin: 0 auto;
 }
-    
     
   </style>
 </head>
