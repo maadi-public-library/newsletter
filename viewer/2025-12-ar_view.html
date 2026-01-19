@@ -50,6 +50,7 @@ canvas {
   width: auto;
   height: auto;
   display: block;
+  transition: opacity 0.2s ease;
 }
 
 .controls {
@@ -168,6 +169,11 @@ function updateButtons() {
   prevBtn.disabled = (pageNum <= 1);
   nextBtn.disabled = (pdfDoc && pageNum >= pdfDoc.numPages);
 }
+
+canvas.style.opacity = 0;
+page.render(...).promise.then(() => {
+  canvas.style.opacity = 1;
+});
   
 </script>
 
