@@ -12,6 +12,7 @@
       --light-gray: #F4F6F8;
     }
 
+    /* ===== Base ===== */
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -26,15 +27,67 @@
       padding: 30px 20px 50px;
     }
 
-   
+    /* ===== Header ===== */
+    .header-bar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 30px;
+    }
 
-    
+    .header-logo.left {
+      text-align: left;
+    }
 
-    /* Section */
+    .header-logo.right {
+      text-align: right;
+    }
+
+    .header-logo img {
+      max-height: 55px;
+      object-fit: contain;
+    }
+
+    .header-title {
+      text-align: center;
+    }
+
+    .header-title h1 {
+      margin: 0;
+      font-size: 36px;
+      color: var(--dark-blue);
+    }
+
+    .header-title .subtitle {
+      margin-top: 8px;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--dark-blue);
+      letter-spacing: 0.3px;
+    }
+
+    /* ===== Library Exterior Photo ===== */
+    .library-photo {
+      width: 100%;
+      max-width: 960px;
+      height: 240px;
+      margin: 0 auto 40px;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    .library-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ===== Sections ===== */
     section {
       margin-bottom: 40px;
     }
-  
+
     section h2 {
       font-size: 20px;
       color: var(--dark-blue);
@@ -50,10 +103,11 @@
     }
 
     li {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
-    a {
+    /* ===== Buttons ===== */
+    a.button {
       display: inline-block;
       padding: 10px 14px;
       background: var(--primary-blue);
@@ -61,14 +115,15 @@
       text-decoration: none;
       font-weight: 500;
       border-radius: 4px;
+      margin-right: 8px;
       transition: background 0.2s ease;
     }
 
-    a:hover {
+    a.button:hover {
       background: #094f8a;
     }
 
-    /* Footer */
+    /* ===== Footer ===== */
     footer {
       margin-top: 60px;
       padding-top: 25px;
@@ -76,222 +131,107 @@
       text-align: center;
     }
 
-    .footer-logo {
-      margin-bottom: 10px;
-    }
-
-.footer-logo img {
-  height: 10px;
-  width: auto;
-  vertical-align: middle; /* ← 핵심 */
-}
-
-    footer p {
-      margin: 0;
+    .footer-credit {
       font-size: 13px;
       color: #555;
     }
-.footer-credit {
-  font-size: 13px;
-  color: #555;
-}
 
-.partner {
-  display: inline-flex;
-  align-items: center;   /* ← 이 줄이 정답 */
-  margin-left: 4px;
-}
+    .partner {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 4px;
+    }
 
-.partner img {
-  height: 10px;
-  width: auto;
-}
+    .partner img {
+      height: 10px;
+      width: auto;
+      display: block;
+    }
 
-/* === FORCE OVERRIDE FOR FOOTER LOGO LINK === */
-footer .footer-logo a {
-  display: inline;
-  padding: 0;
-  background: none !important;
-}
+    /* ===== Mobile ===== */
+    @media (max-width: 700px) {
+      .header-bar {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        text-align: center;
+      }
 
-footer .footer-logo a:hover {
-  background: none !important;
-}
+      .header-logo.left,
+      .header-logo.right {
+        text-align: center;
+      }
 
-footer .footer-logo a img {
-  background: none;
-}
-
-/* === Three-column header layout === */
-.header-bar {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.header-logo.left {
-  text-align: left;
-}
-
-.header-logo.right {
-  text-align: right;
-}
-
-.header-logo img {
-  max-height: 55px;
-  object-fit: contain;
-}
-
-.header-title {
-  text-align: center;
-}
-
-.header-title h1 {
-  margin: 0;
-  font-size: 36px;
-  color: var(--dark-blue);
-}
-
-.header-title h3 {
-  margin: 6px 0 0;
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--dark-blue);
-}
-
-.header-title .subtitle {
-  margin: 8px 0 0;
-  font-size: 26px;          /* ← section h2(20px)보다 큼 */
-  font-weight: 600;
-  color: var(--dark-blue);
-  letter-spacing: 0.3px;
-}
-    
-@media (max-width: 700px) {
-  .library-photo {
-    height: 180px;
-    margin-bottom: 30px;
-  }
-}
-
-  .header-logo.left,
-  .header-logo.right {
-    text-align: center;
-  }
-}
-
-    /* === Library Exterior Photo === */
-.library-photo {
-  width: 100%;
-  max-width: 960px;
-  height: 240px;              /* ← 핵심: 세로 높이 제한 */
-  margin: 0 auto 40px;
-  overflow: hidden;           /* ← 넘치는 부분 자르기 */
-  border-radius: 6px;
-}
-
-.library-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;          /* ← 비율 유지 + 중앙 크롭 */
-  display: block;
-}
-    
+      .library-photo {
+        height: 180px;
+        margin-bottom: 30px;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
 
-  <div class="header-bar">
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="header-logo left">
+        <img src="assets/logos/ESCD_logo.png" alt="ESCD Logo">
+      </div>
 
-  <div class="header-logo left">
-    <img src="assets/logos/ESCD_logo.png" alt="ESCD Logo">
-  </div>
+      <div class="header-title">
+        <h1>Maadi Public Library</h1>
+        <div class="subtitle">Monthly Newsletter Archive</div>
+      </div>
 
-<div class="header-title">
-  <h1>Maadi Public Library</h1>
-  <h2 class="subtitle">Monthly Newsletter Archive</h2>
-</div>
+      <div class="header-logo right">
+        <img src="assets/logos/Maadi_Public_Library_logo.png" alt="Maadi Public Library Logo">
+      </div>
+    </div>
 
-  <div class="header-logo right">
-    <img src="assets/logos/Maadi_Public_Library_logo.png" alt="Maadi Public Library Logo">
-  </div>
+    <!-- Library Exterior Photo -->
+    <div class="library-photo">
+      <img src="assets/images/library_front.png"
+           alt="Exterior view of Maadi Public Library">
+    </div>
 
-</div>
+    <!-- 2025 -->
+    <section>
+      <h2>2025</h2>
+      <ul>
+        <li>
+          <strong>December 2025 Newsletter (Arabic)</strong><br><br>
+          <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">
+            🔍 View (Online)
+          </a>
+          <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>
+            ⬇ Download (PDF)
+          </a>
+        </li>
+      </ul>
+    </section>
 
-
-<!-- Library Exterior Photo -->
-<div class="library-photo">
-  <img src="assets/images/library_front.png"
-       alt="Exterior view of Maadi Public Library">
-</div>
-
-
-    
-    <!-- 2025 (TOP) -->
- <section>
-  <h2>2025</h2>
-  <ul>
-    <li>
-      <strong>December 2025 Newsletter (Arabic)</strong> <br><br>
-
-      <a href="viewer/2025-12-ar_view.html" target="_blank">
-        🔍 View (Online)
-      </a>
-
-      <a href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>
-        ⬇ Download (PDF)
-      </a>
-    </li>
-  </ul>
-</section>
-
-    <!-- 2026 (BOTTOM) -->
-  <section>
-  <h2>2026</h2>
-  <ul>
-    <li>
-      <strong>January 2026 Newsletter (Arabic)</strong><br><br>
-
-      <!--a href="viewer/2026-01-ar_view.html" target="_blank">
-        🔍 View (Flipbook)
-      </a>
-
-      <a href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>
-        ⬇ Download (PDF)
-     </a-->
-    </li>
-  </ul>
-
-     <ul>
-    <li>
-      <strong>January 2026 Newsletter (English)</strong><br><br>
-
-      <!--a href="viewer/2026-01-en_view.html" target="_blank">
-        🔍 View (Flipbook)
-      </a>
-
-      <a href="2026/01/maadi-2026-01-newsletter-en_down.pdf" download>
-        ⬇ Download (PDF)
-     </a-->
-    </li>
-  </ul>
-</section>
+    <!-- 2026 -->
+    <section>
+      <h2>2026</h2>
+      <ul>
+        <li>
+          <strong>January 2026 Newsletter (Arabic)</strong>
+        </li>
+        <li>
+          <strong>January 2026 Newsletter (English)</strong>
+        </li>
+      </ul>
+    </section>
 
     <!-- Footer -->
     <footer>
-<p class="footer-credit">
-  This publication is produced in collaboration with
-  <span class="partner">
-    <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
-  </span>
-</p>
-
-      
-</footer>
-
+      <p class="footer-credit">
+        This publication is produced in collaboration with
+        <span class="partner">
+          <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
+        </span>
+      </p>
+    </footer>
 
   </div>
 </body>
