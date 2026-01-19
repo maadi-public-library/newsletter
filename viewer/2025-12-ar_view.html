@@ -30,28 +30,22 @@
       color: #1F3C6D;
     }
 
-    /* Viewer container */
+    /* Viewer */
     #viewer {
       position: relative;
       width: 100%;
       max-width: 800px;
       height: calc(100vh - 120px);
       margin: 0 auto;
-      box-sizing: border-box;
+      background: #ffffff;
       overflow: hidden;
 
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      background: #ffffff;
     }
 
     canvas {
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      align-items: flex-start;   /* 중앙 고정 ❌, 위 기준 ⭕ */
       display: block;
       transition: opacity 0.2s ease;
       opacity: 1;
@@ -105,7 +99,7 @@
 
 <body>
 
-<header>555555December 2025 Newsletter (Arabic)</header>
+<header>December 2025 Newsletter (Arabic)</header>
 
 <div id="viewer">
   <!-- Loading -->
@@ -155,19 +149,31 @@
     pdfDoc.getPage(num).then(page => {
       const unscaledViewport = page.getViewport({ scale: 1 });
 
-      // 기준 scale: 최초 1회만 계산
+      /* === 핵심: 반응형 scale 기준 === */
       if (!baseScale) {
-        if (container.clientWidth === 0) {
+        if (container.clientWidth === 0 || container.clientHeight === 0) {
           rendering = false;
           requestAnimationFrame(() => renderPage(num));
           return;
         }
-        baseScale = container.clientWidth / unscaledViewport.width;
+
+        const containerWidth  = container.clientWidth;
+        const containerHeight = container.clientHeight;
+
+        const scaleByWidth  = containerWidth  / unscaledViewport.width;
+        const scaleByHeight = containerHeight / unscaledViewport.height;
+
+        // 모바일: 가로 기준 / 데스크톱: 세로 기준
+        if (window.innerWidth <= 768) {
+          baseScale = scaleByWidth;
+        } else {
+          baseScale = scaleByHeight;
+        }
       }
 
       const viewport = page.getViewport({ scale: baseScale });
 
-      /* === 핵심: 고해상도(DPR) 대응 === */
+      /* === 고해상도(DPR) === */
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
       canvas.width  = Math.floor(viewport.width  * dpr);
@@ -209,7 +215,7 @@
     document.getElementById("next").disabled = (pageNum >= pdfDoc.numPages);
   }
 
-  /* Resize 대응 */
+  /* Resize 시 scale 재계산 */
   const resizeObserver = new ResizeObserver(() => {
     baseScale = null;
     renderPage(pageNum);
