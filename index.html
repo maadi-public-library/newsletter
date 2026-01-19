@@ -148,6 +148,18 @@
       display: block;
     }
 
+/* ===== Section Divider ===== */
+.section-divider {
+  width: 100%;
+  max-width: 960px;
+  height: 6px;                          /* ← 두께 */
+  background-color: var(--primary-blue);
+  margin: 0 auto 30px;                 /* 아래 여백 */
+  border-radius: 3px;                  /* 살짝만 둥글게 */
+}
+
+
+    
     /* ===== Mobile ===== */
     @media (max-width: 700px) {
       .header-bar {
@@ -188,6 +200,10 @@
       </div>
     </div>
 
+    
+<div class="section-divider"></div>
+
+    
     <!-- Library Exterior Photo -->
     <div class="library-photo">
       <img src="assets/images/library.png"
