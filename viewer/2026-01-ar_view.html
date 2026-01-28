@@ -99,7 +99,7 @@
 
 <body>
 
-<header>January 2026 - Maadi Public Library Newsletter (Arabic)</header>
+<header>January 2026 – Maadi Public Library Newsletter (Arabic)</header>
 
 <div id="viewer">
   <!-- Loading -->
@@ -130,10 +130,11 @@
   const ctx = canvas.getContext("2d");
   const loading = document.getElementById("loading");
 
+  /* === 핵심: 스트리밍 & 프리페치 ON === */
   pdfjsLib.getDocument({
-   url: url,
-  disableStream: false,
-  disableAutoFetch: false
+    url: url,
+    disableStream: false,
+    disableAutoFetch: false
   }).promise.then(pdf => {
     pdfDoc = pdf;
     renderPage(pageNum);
@@ -149,7 +150,7 @@
     pdfDoc.getPage(num).then(page => {
       const unscaledViewport = page.getViewport({ scale: 1 });
 
-      /* === 핵심: 반응형 scale 기준 === */
+      /* === 반응형 scale 기준 === */
       if (!baseScale) {
         if (container.clientWidth === 0 || container.clientHeight === 0) {
           rendering = false;
@@ -164,14 +165,17 @@
         const scaleByHeight = containerHeight / unscaledViewport.height;
 
         // 모바일: 가로 기준 / 데스크톱: 세로 기준
-        if (window.innerWidth <= 768) {
-          baseScale = scaleByWidth;
-        } else {
-          baseScale = scaleByHeight;
-        }
+        baseScale = (window.innerWidth <= 768)
+          ? scaleByWidth
+          : scaleByHeight;
       }
 
-      const viewport = page.getViewport({ scale: baseScale });
+      /* === 첫 페이지만 살짝 가볍게 === */
+      const effectiveScale = (num === 1)
+        ? baseScale * 0.9
+        : baseScale;
+
+      const viewport = page.getViewport({ scale: effectiveScale });
 
       /* === 고해상도(DPR) === */
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
