@@ -99,7 +99,7 @@
 
 <body>
 
-<header>December 2025 - Maadi Public Library Newsletter (Arabic)</header>
+<header>December 2025 – Maadi Public Library Newsletter (Arabic)</header>
 
 <div id="viewer">
   <!-- Loading -->
@@ -130,10 +130,11 @@
   const ctx = canvas.getContext("2d");
   const loading = document.getElementById("loading");
 
+  /* === 핵심: 스트리밍 & 프리페치 ON === */
   pdfjsLib.getDocument({
-     url: url,
-  disableStream: false,
-  disableAutoFetch: false
+    url: url,
+    disableStream: false,
+    disableAutoFetch: false
   }).promise.then(pdf => {
     pdfDoc = pdf;
     renderPage(pageNum);
@@ -144,85 +145,4 @@
     rendering = true;
 
     canvas.style.opacity = 0;
-    loading.style.display = "flex";
-
-    pdfDoc.getPage(num).then(page => {
-      const unscaledViewport = page.getViewport({ scale: 1 });
-
-      /* === 핵심: 반응형 scale 기준 === */
-      if (!baseScale) {
-        if (container.clientWidth === 0 || container.clientHeight === 0) {
-          rendering = false;
-          requestAnimationFrame(() => renderPage(num));
-          return;
-        }
-
-        const containerWidth  = container.clientWidth;
-        const containerHeight = container.clientHeight;
-
-        const scaleByWidth  = containerWidth  / unscaledViewport.width;
-        const scaleByHeight = containerHeight / unscaledViewport.height;
-
-        // 모바일: 가로 기준 / 데스크톱: 세로 기준
-        if (window.innerWidth <= 768) {
-          baseScale = scaleByWidth;
-        } else {
-          baseScale = scaleByHeight;
-        }
-      }
-
-      const viewport = page.getViewport({ scale: baseScale });
-
-      /* === 고해상도(DPR) === */
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-      canvas.width  = Math.floor(viewport.width  * dpr);
-      canvas.height = Math.floor(viewport.height * dpr);
-
-      canvas.style.width  = Math.floor(viewport.width)  + "px";
-      canvas.style.height = Math.floor(viewport.height) + "px";
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      page.render({
-        canvasContext: ctx,
-        viewport: viewport
-      }).promise.then(() => {
-        rendering = false;
-        canvas.style.opacity = 1;
-        loading.style.display = "none";
-        updateButtons();
-      });
-    });
-  }
-
-  document.getElementById("prev").onclick = () => {
-    if (pageNum > 1) {
-      pageNum--;
-      renderPage(pageNum);
-    }
-  };
-
-  document.getElementById("next").onclick = () => {
-    if (pageNum < pdfDoc.numPages) {
-      pageNum++;
-      renderPage(pageNum);
-    }
-  };
-
-  function updateButtons() {
-    document.getElementById("prev").disabled = (pageNum <= 1);
-    document.getElementById("next").disabled = (pageNum >= pdfDoc.numPages);
-  }
-
-  /* Resize 시 scale 재계산 */
-  const resizeObserver = new ResizeObserver(() => {
-    baseScale = null;
-    renderPage(pageNum);
-  });
-
-  resizeObserver.observe(container);
-</script>
-
-</body>
-</html>
+    loading.style.display = "fle
