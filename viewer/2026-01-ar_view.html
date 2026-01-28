@@ -131,9 +131,9 @@
   const loading = document.getElementById("loading");
 
   pdfjsLib.getDocument({
-    url: url,
-    disableStream: true,
-    disableAutoFetch: true
+   url: url,
+  disableStream: false,
+  disableAutoFetch: false
   }).promise.then(pdf => {
     pdfDoc = pdf;
     renderPage(pageNum);
