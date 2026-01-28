@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>December 2025 - Maadi Public Library Newsletter (Arabic)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background: #f4f6f8;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #1F3C6D;
+    }
+
+    /* Viewer */
+    #viewer {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: calc(100vh - 120px);
+      margin: 0 auto;
+      background: #ffffff;
+      overflow: hidden;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    canvas {
+      display: block;
+      transition: opacity 0.2s ease;
+      opacity: 1;
+    }
+
+    /* Loading overlay */
+    #loading {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      font-size: 14px;
+      color: #1F3C6D;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 4px solid #dce3ec;
+      border-top-color: #0B5FA5;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .controls {
+      margin: 12px 0 20px;
+    }
+
+    button {
+      padding: 8px 14px;
+      margin: 0 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>December 2025 - Maadi Public Library Newsletter (Arabic)</header>
+
+<div id="viewer">
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <div>Loading newsletter…</div>
+  </div>
+
+  <!-- Canvas -->
+  <canvas id="pdf-canvas"></canvas>
+</div>
+
+<div class="controls">
+  <button id="prev">◀ Previous</button>
+  <button id="next">Next ▶</button>
+</div>
+
+<script>
+  const url = "../2025/12/maadi-2025-12-newsletter-ar_view.pdf";
+
+  let pdfDoc = null;
+  let pageNum = 1;
+  let baseScale = null;
+  let rendering = false;
+
+  const container = document.getElementById("viewer");
+  const canvas = document.getElementById("pdf-canvas");
+  const ctx = canvas.getContext("2d");
+  const loading = document.getElementById("loading");
+
+  pdfjsLib.getDocument({
+    url: url,
+    disableStream: true,
+    disableAutoFetch: true
+  }).promise.then(pdf => {
+    pdfDoc = pdf;
+    renderPage(pageNum);
+  });
+
+  function renderPage(num) {
+    if (rendering || !pdfDoc) return;
+    rendering = true;
+
+    canvas.style.opacity = 0;
+    loading.style.display = "flex";
+
+    pdfDoc.getPage(num).then(page => {
+      const unscaledViewport = page.getViewport({ scale: 1 });
+
+      /* === 핵심: 반응형 scale 기준 === */
+      if (!baseScale) {
+        if (container.clientWidth === 0 || container.clientHeight === 0) {
+          rendering = false;
+          requestAnimationFrame(() => renderPage(num));
+          return;
+        }
+
+        const containerWidth  = container.clientWidth;
+        const containerHeight = container.clientHeight;
+
+        const scaleByWidth  = containerWidth  / unscaledViewport.width;
+        const scaleByHeight = containerHeight / unscaledViewport.height;
+
+        // 모바일: 가로 기준 / 데스크톱: 세로 기준
+        if (window.innerWidth <= 768) {
+          baseScale = scaleByWidth;
+        } else {
+          baseScale = scaleByHeight;
+        }
+      }
+
+      const viewport = page.getViewport({ scale: baseScale });
+
+      /* === 고해상도(DPR) === */
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width  = Math.floor(viewport.width  * dpr);
+      canvas.height = Math.floor(viewport.height * dpr);
+
+      canvas.style.width  = Math.floor(viewport.width)  + "px";
+      canvas.style.height = Math.floor(viewport.height) + "px";
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      page.render({
+        canvasContext: ctx,
+        viewport: viewport
+      }).promise.then(() => {
+        rendering = false;
+        canvas.style.opacity = 1;
+        loading.style.display = "none";
+        updateButtons();
+      });
+    });
+  }
+
+  document.getElementById("prev").onclick = () => {
+    if (pageNum > 1) {
+      pageNum--;
+      renderPage(pageNum);
+    }
+  };
+
+  document.getElementById("next").onclick = () => {
+    if (pageNum < pdfDoc.numPages) {
+      pageNum++;
+      renderPage(pageNum);
+    }
+  };
+
+  function updateButtons() {
+    document.getElementById("prev").disabled = (pageNum <= 1);
+    document.getElementById("next").disabled = (pageNum >= pdfDoc.numPages);
+  }
+
+  /* Resize 시 scale 재계산 */
+  const resizeObserver = new ResizeObserver(() => {
+    baseScale = null;
+    renderPage(pageNum);
+  });
+
+  resizeObserver.observe(container);
+</script>
+
+</body>
+</html>
