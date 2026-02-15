@@ -12,7 +12,6 @@
   --light-gray: #F4F6F8;
 }
 
-/* ===== Base ===== */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -55,7 +54,6 @@ body {
   color: var(--dark-blue);
 }
 
-/* ===== Divider ===== */
 .section-divider {
   height: 18px;
   background: var(--primary-blue);
@@ -63,7 +61,6 @@ body {
   margin-bottom: 14px;
 }
 
-/* ===== Library Photo ===== */
 .library-photo {
   height: 260px;
   overflow: hidden;
@@ -77,10 +74,12 @@ body {
   object-fit: cover;
 }
 
-/* ===== Section ===== */
-section { margin-bottom: 60px; }
+/* ===== Year Section ===== */
+.year-section {
+  margin-bottom: 60px;
+}
 
-section h2 {
+.year-title {
   font-size: 22px;
   color: var(--dark-blue);
   border-bottom: 3px solid var(--primary-blue);
@@ -113,7 +112,6 @@ section h2 {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* Cover */
 .news-cover {
   width: 140px;
   height: 200px;
@@ -127,7 +125,6 @@ section h2 {
   object-fit: cover;
 }
 
-/* Content */
 .news-content strong {
   display: block;
   font-size: 17px;
@@ -141,7 +138,6 @@ section h2 {
   color: #444;
 }
 
-/* Buttons (간격 개선 핵심) */
 .button-group {
   display: flex;
   flex-wrap: wrap;
@@ -215,14 +211,12 @@ footer {
   <div class="header-logo left">
     <img src="assets/logos/ESCD_logo.png">
   </div>
-
   <div class="header-title">
     <h1>Maadi Public Library (مكتبة المعادي العامة)</h1>
     <div class="subtitle">
       Monthly Newsletter Archive (أرشيف النشرة الشهرية)
     </div>
   </div>
-
   <div class="header-logo right">
     <img src="assets/logos/Maadi_Public_Library_logo.png">
   </div>
@@ -234,11 +228,8 @@ footer {
   <img src="assets/images/library.png">
 </div>
 
-<!-- ===== ALL CARDS IN ONE GRID ===== -->
-<section>
-<h2>Newsletter Archive</h2>
-
-<div class="news-grid" id="news-container">
+<!-- ===== All cards go here ONLY ===== -->
+<div id="all-news">
 
 <div class="news-card" data-date="2025-12">
   <div class="news-cover">
@@ -247,7 +238,7 @@ footer {
     </a>
   </div>
   <div class="news-content">
-    <strong>December 2025 <br>Maadi Public Library Newsletter</strong>
+    <strong>December 2025 - Maadi Public Library Newsletter</strong>
     <span class="ar-title">ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة</span>
     <div class="button-group">
       <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
@@ -263,7 +254,7 @@ footer {
     </a>
   </div>
   <div class="news-content">
-    <strong>January 2026<br>Maadi Public Library Newsletter</strong>
+    <strong>January 2026 - Maadi Public Library Newsletter</strong>
     <span class="ar-title">يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة</span>
     <div class="button-group">
       <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
@@ -273,7 +264,6 @@ footer {
 </div>
 
 </div>
-</section>
 
 <footer>
 <p class="footer-credit">
@@ -290,15 +280,41 @@ This publication is produced in collaboration with
 </div>
 
 <script>
-/* ===== AUTO SORT BY LATEST DATE ===== */
-const container = document.getElementById("news-container");
+/* ===== AUTO SORT + YEAR GROUPING ===== */
+const container = document.getElementById("all-news");
 const cards = Array.from(container.querySelectorAll(".news-card"));
 
-cards.sort((a, b) => {
-  return b.dataset.date.localeCompare(a.dataset.date);
+cards.sort((a, b) => b.dataset.date.localeCompare(a.dataset.date));
+
+const grouped = {};
+
+cards.forEach(card => {
+  const year = card.dataset.date.split("-")[0];
+  if (!grouped[year]) grouped[year] = [];
+  grouped[year].push(card);
 });
 
-cards.forEach(card => container.appendChild(card));
+container.innerHTML = "";
+
+Object.keys(grouped).sort((a, b) => b - a).forEach(year => {
+
+  const yearSection = document.createElement("div");
+  yearSection.className = "year-section";
+
+  const title = document.createElement("div");
+  title.className = "year-title";
+  title.textContent = year;
+
+  const grid = document.createElement("div");
+  grid.className = "news-grid";
+
+  grouped[year].forEach(card => grid.appendChild(card));
+
+  yearSection.appendChild(title);
+  yearSection.appendChild(grid);
+
+  container.appendChild(yearSection);
+});
 </script>
 
 </body>
