@@ -31,7 +31,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
 .header-left,
@@ -60,16 +60,21 @@ body{
   color:var(--dark-blue);
 }
 
-/* ===== ARCHIVE BAR ===== */
-.archive-bar{
-  background:var(--primary-blue);
-  color:#fff;
+/* ===== ARCHIVE TITLE (정제버전) ===== */
+.archive-title{
   text-align:center;
-  font-size:24px;
-  font-weight:600;
-  padding:14px 10px;
-  border-radius:6px;
-  margin:20px 0 50px;
+  font-size:22px;
+  font-weight:700;
+  color:var(--dark-blue);
+  margin:10px 0 25px;
+}
+
+.archive-line{
+  height:4px;
+  width:100px;
+  background:var(--primary-blue);
+  margin:0 auto 50px;
+  border-radius:3px;
 }
 
 /* ===== YEAR ===== */
@@ -83,21 +88,21 @@ body{
   color:var(--dark-blue);
   border-bottom:3px solid var(--primary-blue);
   padding-bottom:8px;
-  margin-bottom:30px;
+  margin-bottom:35px;
 }
 
 /* ===== GRID ===== */
 .news-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:35px;
+  gap:40px;
 }
 
 /* ===== CARD ===== */
 .news-card{
   background:#f9fafc;
   border-radius:14px;
-  padding:22px 20px 26px;
+  padding:24px 20px 30px;
   text-align:center;
   box-shadow:0 6px 22px rgba(0,0,0,0.05);
   transition:.2s ease;
@@ -108,12 +113,26 @@ body{
   box-shadow:0 12px 32px rgba(0,0,0,0.08);
 }
 
+/* Month title 위로 */
+.news-month{
+  font-size:19px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.news-month-ar{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:18px;
+  color:#444;
+}
+
 .news-cover{
   width:100%;
-  height:260px;
+  height:250px;
   overflow:hidden;
   border-radius:10px;
-  margin-bottom:18px;
+  margin-bottom:22px;
 }
 
 .news-cover img{
@@ -127,28 +146,15 @@ body{
   transform:scale(1.05);
 }
 
-.news-content strong{
-  display:block;
-  font-size:18px;
-  margin-bottom:6px;
-}
-
-.news-content .ar-title{
-  display:block;
-  font-size:14px;
-  color:#555;
-  margin-bottom:20px;
-}
-
-/* ===== BUTTONS (세로) ===== */
+/* 버튼 세로 */
 .button-group{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:14px;
 }
 
 a.button{
-  padding:10px 16px;
+  padding:11px 16px;
   font-size:14px;
   font-weight:600;
   border-radius:6px;
@@ -164,7 +170,7 @@ a.button:hover{
 
 /* ===== FOOTER ===== */
 footer{
-  margin-top:80px;
+  margin-top:90px;
   padding-top:25px;
   border-top:1px solid #eee;
   text-align:center;
@@ -182,7 +188,7 @@ footer{
 }
 
 .footer-partner img{
-  height:12px;
+  height:11px;
   vertical-align:middle;
 }
 
@@ -211,7 +217,7 @@ footer{
   }
 
   .news-cover{
-    height:230px;
+    height:220px;
   }
 }
 </style>
@@ -220,7 +226,6 @@ footer{
 <body>
 <div class="container">
 
-<!-- HEADER -->
 <div class="header-bar">
   <div class="header-left">
     <img src="assets/logos/ESCD_logo.png">
@@ -235,43 +240,42 @@ footer{
   </div>
 </div>
 
-<div class="archive-bar">
+<div class="archive-title">
   Monthly Newsletter Archive (أرشيف النشرة الشهرية)
 </div>
+<div class="archive-line"></div>
 
-<!-- NEWS -->
 <div id="all-news">
 
-  <!-- 카드만 추가하면 됨 -->
   <div class="news-card" data-date="2026-01">
+    <div class="news-month">January 2026</div>
+    <div class="news-month-ar">يناير 2026</div>
+
     <div class="news-cover">
       <a href="viewer/2026-01-ar_view.html" target="_blank">
         <img src="assets/covers/2026-01-cover.jpg">
       </a>
     </div>
-    <div class="news-content">
-      <strong>January 2026</strong>
-      <span class="ar-title">يناير 2026</span>
-      <div class="button-group">
-        <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
-        <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>⬇ Download</a>
-      </div>
+
+    <div class="button-group">
+      <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
+      <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>⬇ Download</a>
     </div>
   </div>
 
   <div class="news-card" data-date="2025-12">
+    <div class="news-month">December 2025</div>
+    <div class="news-month-ar">ديسمبر 2025</div>
+
     <div class="news-cover">
       <a href="viewer/2025-12-ar_view.html" target="_blank">
         <img src="assets/covers/2025-12-cover.jpg">
       </a>
     </div>
-    <div class="news-content">
-      <strong>December 2025</strong>
-      <span class="ar-title">ديسمبر 2025</span>
-      <div class="button-group">
-        <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
-        <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>⬇ Download</a>
-      </div>
+
+    <div class="button-group">
+      <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
+      <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>⬇ Download</a>
     </div>
   </div>
 
@@ -291,10 +295,8 @@ This publication is produced in collaboration with
 </div>
 
 <script>
-/* 자동 정렬 + 연도 그룹 생성 */
 const container=document.getElementById("all-news");
 const cards=Array.from(container.querySelectorAll(".news-card"));
-
 cards.sort((a,b)=>b.dataset.date.localeCompare(a.dataset.date));
 
 const grouped={};
