@@ -60,13 +60,13 @@ body{
   color:var(--dark-blue);
 }
 
-/* ===== ARCHIVE TITLE (정제버전) ===== */
+/* ===== ARCHIVE TITLE ===== */
 .archive-title{
   text-align:center;
   font-size:22px;
   font-weight:700;
   color:var(--dark-blue);
-  margin:10px 0 25px;
+  margin:10px 0 10px;
 }
 
 .archive-line{
@@ -84,7 +84,7 @@ body{
 
 .year-title{
   font-size:26px;
-  font-weight:700;
+  font-weight:800;
   color:var(--dark-blue);
   border-bottom:3px solid var(--primary-blue);
   padding-bottom:8px;
@@ -113,43 +113,57 @@ body{
   box-shadow:0 12px 32px rgba(0,0,0,0.08);
 }
 
-/* Month title 위로 */
+/* ===== MONTH TEXT ===== */
 .news-month{
-  font-size:19px;
-  font-weight:700;
+  font-size:22px;
+  font-weight:800;
+  color:var(--dark-blue);
   margin-bottom:6px;
+  position:relative;
+  padding-bottom:10px;
+}
+
+.news-month::after{
+  content:"";
+  display:block;
+  width:45px;
+  height:3px;
+  background:var(--primary-blue);
+  margin:8px auto 0;
+  border-radius:2px;
 }
 
 .news-month-ar{
-  font-size:15px;
+  font-size:17px;
   font-weight:700;
-  margin-bottom:18px;
-  color:#444;
+  margin-bottom:22px;
+  color:#333;
 }
 
+/* ===== COVER ===== */
 .news-cover{
-  width:100%;
-  aspect-ratio: 3 / 4;        /* 표지 비율 유지 */
+  width:80%;
+  margin:0 auto 24px;
+  aspect-ratio:3/4;
   background:#ffffff;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:10px;
-  margin-bottom:22px;
 }
 
 .news-cover img{
   max-width:100%;
   max-height:100%;
-  object-fit:contain;         /* ← 핵심 */
+  object-fit:contain;
+  transition:.3s ease;
 }
-
 
 .news-cover img:hover{
   transform:scale(1.05);
 }
 
-/* 버튼 세로 */
+/* ===== BUTTONS ===== */
 .button-group{
   display:flex;
   flex-direction:column;
@@ -220,7 +234,7 @@ footer{
   }
 
   .news-cover{
-    height:220px;
+    width:70%;
   }
 }
 </style>
