@@ -12,9 +12,10 @@
       --light-gray: #F4F6F8;
     }
 
+    /* ===== Base ===== */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--light-gray);
       color: #222;
     }
@@ -26,7 +27,7 @@
       padding: 30px 20px 50px;
     }
 
-    /* Header */
+    /* ===== Header ===== */
     .header-bar {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -34,42 +35,48 @@
       margin-bottom: 16px;
     }
 
-    .header-logo img {
-      max-height: 60px;
-    }
-
     .header-logo.left { text-align: left; }
     .header-logo.right { text-align: right; }
 
-    .header-title {
-      text-align: center;
+    .header-logo img {
+      max-height: 60px;
+      object-fit: contain;
     }
+
+    .header-title { text-align: center; }
 
     .header-title h1 {
       margin: 0;
-      font-size: 32px;
+      font-size: 36px;
       color: var(--dark-blue);
     }
 
-    .subtitle {
-      font-size: 22px;
+    .header-title .subtitle {
       margin-top: 4px;
+      font-size: 26px;
       font-weight: 600;
       color: var(--dark-blue);
+      letter-spacing: 0.3px;
     }
 
+    /* ===== Divider ===== */
     .section-divider {
-      height: 18px;
-      background: var(--primary-blue);
-      margin: 10px 0 20px;
+      width: 100%;
+      max-width: 960px;
+      height: 20px;
+      background-color: var(--primary-blue);
+      margin: 0 auto 10px;
       border-radius: 3px;
     }
 
+    /* ===== Library Photo ===== */
     .library-photo {
-      height: 220px;
+      width: 100%;
+      max-width: 960px;
+      height: 240px;
+      margin: 0 auto 24px;
       overflow: hidden;
       border-radius: 6px;
-      margin-bottom: 30px;
     }
 
     .library-photo img {
@@ -79,29 +86,32 @@
       display: block;
     }
 
-    section {
-      margin-bottom: 40px;
-    }
+    /* ===== Section ===== */
+    section { margin-bottom: 40px; }
 
     section h2 {
       font-size: 20px;
+      color: var(--dark-blue);
       border-bottom: 3px solid var(--primary-blue);
       padding-bottom: 8px;
       margin-bottom: 20px;
-      color: var(--dark-blue);
     }
 
-    /* Newsletter Card */
+    /* ===== Newsletter Card ===== */
     .news-card {
-  grid-template-columns: 112px 1fr;
-  gap: 16px;   /* 20px → 16px 정도 추천 */
-}
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
     .news-cover {
-      width: 112px;
-      height: 154px;
+      width: 160px;
+      height: 220px;
       overflow: hidden;
       border-radius: 6px;
-      background: #eee;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .news-cover img {
@@ -113,64 +123,76 @@
 
     .news-content strong {
       display: block;
+      font-size: 16px;
       margin-bottom: 6px;
     }
 
-    .ar-title {
+    .news-content .ar-title {
       display: block;
-      margin-bottom: 12px;
       font-size: 14px;
+      margin-bottom: 14px;
       color: #444;
     }
 
+    /* ===== Buttons ===== */
     a.button {
       display: inline-block;
       padding: 10px 14px;
       background: var(--primary-blue);
-      color: #fff;
+      color: #ffffff;
       text-decoration: none;
+      font-weight: 500;
       border-radius: 4px;
       margin-right: 8px;
-      margin-bottom: 6px;
+      transition: background 0.2s ease;
     }
 
-    a.button:hover {
-      background: #094f8a;
-    }
+    a.button:hover { background: #094f8a; }
 
+    /* ===== Footer ===== */
     footer {
       margin-top: 60px;
-      padding-top: 20px;
+      padding-top: 25px;
       border-top: 1px solid #eee;
       text-align: center;
+    }
+
+    .footer-credit {
       font-size: 13px;
       color: #555;
     }
 
-    .partner img {
-      height: 10px;
-      vertical-align: middle;
+    .partner {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 4px;
     }
 
-    /* Download overlay */
+    .partner img {
+      height: 10px;
+      width: auto;
+      display: block;
+    }
+
+    /* ===== Download Loading Overlay ===== */
     #download-loading {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.85);
       display: none;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
       z-index: 999;
       font-size: 14px;
-      color: var(--dark-blue);
+      color: #1F3C6D;
     }
 
     .spinner {
       width: 32px;
       height: 32px;
-      border: 4px solid #ddd;
-      border-top-color: var(--primary-blue);
+      border: 4px solid #dce3ec;
+      border-top-color: #0B5FA5;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin-bottom: 10px;
@@ -180,13 +202,21 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Mobile */
+    /* ===== Mobile ===== */
     @media (max-width: 700px) {
+
       .header-bar {
         grid-template-columns: 1fr;
+        gap: 15px;
         text-align: center;
-        gap: 12px;
       }
+
+      .header-logo.left,
+      .header-logo.right {
+        text-align: center;
+      }
+
+      .library-photo { height: 180px; }
 
       .news-card {
         grid-template-columns: 1fr;
@@ -194,16 +224,12 @@
       }
 
       .news-cover {
-        margin: 0 auto 12px;
+        margin: 0 auto 14px;
       }
 
       a.button {
         display: block;
         margin: 8px 0;
-      }
-
-      .library-photo {
-        height: 170px;
       }
     }
 
@@ -211,114 +237,131 @@
 </head>
 
 <body>
+  <div class="container">
 
-<div class="container">
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="header-logo left">
+        <img src="assets/logos/ESCD_logo.png" alt="ESCD Logo">
+      </div>
 
-  <!-- Header -->
-  <div class="header-bar">
-    <div class="header-logo left">
-      <img src="assets/logos/ESCD_logo.png" alt="ESCD">
+      <div class="header-title">
+        <h1>Maadi Public Library (مكتبة المعادي العامة)</h1>
+        <div class="subtitle">
+          Monthly Newsletter Archive (أرشيف النشرة الشهرية)
+        </div>
+      </div>
+
+      <div class="header-logo right">
+        <img src="assets/logos/Maadi_Public_Library_logo.png"
+             alt="Maadi Public Library Logo">
+      </div>
     </div>
 
-    <div class="header-title">
-      <h1>Maadi Public Library (مكتبة المعادي العامة)</h1>
-      <div class="subtitle">Monthly Newsletter Archive (أرشيف النشرة الشهرية)</div>
+    <div class="section-divider"></div>
+
+    <!-- Library Exterior -->
+    <div class="library-photo">
+      <img src="assets/images/library.png"
+           alt="Exterior view of Maadi Public Library">
     </div>
 
-    <div class="header-logo right">
-      <img src="assets/logos/Maadi_Public_Library_logo.png" alt="Maadi Library">
-    </div>
+    <!-- 2025 -->
+    <section>
+      <h2>2025</h2>
+
+      <div class="news-card">
+        <div class="news-cover">
+          <img src="assets/covers/2025-12-cover.jpg"
+               alt="December 2025 Newsletter Cover">
+        </div>
+
+        <div class="news-content">
+          <strong>December 2025 - Maadi Public Library Newsletter</strong>
+          <span class="ar-title">
+            ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة
+          </span>
+
+          <a class="button"
+             href="viewer/2025-12-ar_view.html"
+             target="_blank">
+            🔍 View (Online)
+          </a>
+
+          <a class="button download-btn"
+             href="2025/12/maadi-2025-12-newsletter-ar_down.pdf"
+             download>
+            ⬇ Download (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2026 -->
+    <section>
+      <h2>2026</h2>
+
+      <div class="news-card">
+        <div class="news-cover">
+          <img src="assets/covers/2026-01-cover.jpg"
+               alt="January 2026 Newsletter Cover">
+        </div>
+
+        <div class="news-content">
+          <strong>January 2026 - Maadi Public Library Newsletter</strong>
+          <span class="ar-title">
+            يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة
+          </span>
+
+          <a class="button"
+             href="viewer/2026-01-ar_view.html"
+             target="_blank">
+            🔍 View (Online)
+          </a>
+
+          <a class="button download-btn"
+             href="2026/01/maadi-2026-01-newsletter-ar_down.pdf"
+             download>
+            ⬇ Download (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p class="footer-credit">
+        This publication is produced in collaboration with
+        <span class="partner">
+          <a href="https://www.koica.go.kr/sites/koica_en/index.do"
+             target="_blank"
+             rel="noopener noreferrer">
+            <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
+          </a>
+        </span>
+      </p>
+    </footer>
+
   </div>
 
-  <div class="section-divider"></div>
-
-  <div class="library-photo">
-    <img src="assets/images/library.png" alt="Library">
+  <!-- Download Loading Overlay -->
+  <div id="download-loading">
+    <div class="spinner"></div>
+    <div>Preparing download…</div>
   </div>
 
-  <!-- 2025 -->
-  <section>
-    <h2>2025</h2>
-
-    <div class="news-card">
-      <div class="news-cover">
-        <img src="assets/covers/2025-12-cover.jpg" alt="Dec 2025">
-      </div>
-      <div class="news-content">
-        <strong>December 2025 - Maadi Public Library Newsletter</strong>
-        <span class="ar-title">ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة</span>
-
-        <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">
-          🔍 View (Online)
-        </a>
-
-        <a class="button download-btn"
-           href="2025/12/maadi-2025-12-newsletter-ar_down.pdf"
-           download>
-          ⬇ Download (PDF)
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2026 -->
-  <section>
-    <h2>2026</h2>
-
-    <div class="news-card">
-      <div class="news-cover">
-        <img src="assets/covers/2026-01-cover.jpg" alt="Jan 2026">
-      </div>
-      <div class="news-content">
-        <strong>January 2026 - Maadi Public Library Newsletter</strong>
-        <span class="ar-title">يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة</span>
-
-        <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">
-          🔍 View (Online)
-        </a>
-
-        <a class="button download-btn"
-           href="2026/01/maadi-2026-01-newsletter-ar_down.pdf"
-           download>
-          ⬇ Download (PDF)
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    This publication is produced in collaboration with
-    <a href="https://www.koica.go.kr/sites/koica_en/index.do"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="partner">
-      <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
-    </a>
-  </footer>
-
-</div>
-
-<!-- Download Loading -->
-<div id="download-loading">
-  <div class="spinner"></div>
-  <div>Preparing download…</div>
-</div>
-
-<script>
-  const loader = document.getElementById("download-loading");
-
-  document.querySelectorAll(".download-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (loader) {
+  <!-- JS -->
+  <script>
+    document.querySelectorAll(".download-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const loader = document.getElementById("download-loading");
         loader.style.display = "flex";
         setTimeout(() => {
           loader.style.display = "none";
-        }, 2500);
-      }
+        }, 3000);
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
