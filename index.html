@@ -76,16 +76,18 @@ body{
 /* ===== LIBRARY PHOTO ===== */
 .library-photo {
   width: 100%;
-  margin: 0 0 30px;   /* ← 위 여백 제거 */
-  border-radius: 8px;
+  max-height: 420px;   /* ← 핵심: 최대 높이 제한 */
   overflow: hidden;
+  border-radius: 8px;
+  margin: 0 0 25px;
 }
 
 .library-photo img {
   width: 100%;
-  height: auto;   /* ← 핵심: 안 잘리게 */
+  height: auto;        /* 비율 유지 */
   display: block;
 }
+
 
 /* ===== YEAR ===== */
 .year-section{
