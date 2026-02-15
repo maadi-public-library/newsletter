@@ -6,117 +6,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --primary-blue:#0B5FA5;
-  --dark-blue:#1F3C6D;
-  --light-gray:#F4F6F8;
+:root {
+  --primary-blue: #0B5FA5;
+  --dark-blue: #1F3C6D;
+  --light-gray: #F4F6F8;
 }
 
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--light-gray);
-  color:#222;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--light-gray);
+  color: #222;
 }
 
-.container{
-  max-width:1200px;
-  margin:0 auto;
-  background:#fff;
-  padding:30px 20px 70px;
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 30px 20px 60px;
 }
 
-/* ===== Header ===== */
-.header-bar{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  margin-bottom:16px;
+/* ===== HEADER (완전 안정형) ===== */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.header-logo img{ max-height:60px; }
-
-.header-title{text-align:center;}
-
-.header-title h1{
-  margin:0;
-  font-size:36px;
-  color:var(--dark-blue);
+/* 좌우 로고 영역 고정폭 */
+.header-left,
+.header-right {
+  width: 180px;
+  display: flex;
+  align-items: center;
 }
 
-.subtitle{
-  margin-top:6px;
-  font-size:24px;
-  font-weight:600;
-  color:var(--dark-blue);
+.header-left {
+  justify-content: flex-start;
 }
 
-.section-divider{
-  height:18px;
-  background:var(--primary-blue);
-  border-radius:4px;
-  margin:15px 0 20px;
+.header-right {
+  justify-content: flex-end;
 }
 
-.library-photo{
-  height:260px;
-  overflow:hidden;
-  border-radius:6px;
-  margin-bottom:60px;
+/* 중앙 타이틀 */
+.header-center {
+  flex: 1;
+  text-align: center;
 }
 
-.library-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.header-left img,
+.header-right img {
+  max-height: 60px;
+  width: auto;
 }
 
-/* ===== Year ===== */
-.year-section{
-  margin-bottom:70px;
+/* 제목 */
+.header-center h1 {
+  margin: 0;
+  font-size: 34px;
+  color: var(--dark-blue);
 }
 
-.year-title{
-  font-size:28px;
-  font-weight:800;
-  color:var(--dark-blue);
-  border-bottom:4px solid var(--primary-blue);
-  padding-bottom:8px;
-  margin-bottom:30px;
+.header-center .subtitle {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--dark-blue);
 }
 
-/* ===== Grid ===== */
-.news-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px;
+/* Divider */
+.section-divider {
+  height: 18px;
+  background: var(--primary-blue);
+  border-radius: 4px;
+  margin: 18px 0 20px;
 }
 
-/* ===== Card (Upgraded Version) ===== */
+/* Library photo */
+.library-photo {
+  height: 260px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 50px;
+}
+
+.library-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Year section */
+.year-section {
+  margin-bottom: 60px;
+}
+
+.year-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark-blue);
+  border-bottom: 3px solid var(--primary-blue);
+  padding-bottom: 8px;
+  margin-bottom: 30px;
+}
+
+/* Card grid */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+/* Card */
 .news-card {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 20px;
-  align-items: flex-start;
-  padding: 22px;
-  border-radius: 14px;
-  background: #f8f9fb;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  height: 100%;
+  grid-template-columns: 150px 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f9fafc;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
 }
 
 .news-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
 }
 
 .news-cover {
-  width: 120px;
-  height: 170px;
+  width: 150px;
+  height: 210px;
   overflow: hidden;
   border-radius: 8px;
-  flex-shrink: 0;
 }
 
 .news-cover img {
@@ -128,21 +153,19 @@ body{
 .news-content strong {
   display: block;
   font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .news-content .ar-title {
-  display: block;
   font-size: 14px;
   color: #555;
-  margin-bottom: 18px;
-  line-height: 1.4;
+  margin-bottom: 16px;
+  display: block;
 }
 
 .button-group {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -152,39 +175,62 @@ a.button {
   font-weight: 600;
   border-radius: 6px;
   background: var(--primary-blue);
-  transition: all 0.2s ease;
+  color: #fff !important;
+  text-decoration: none;
+  transition: 0.2s ease;
 }
 
 a.button:hover {
-  background: #094f8a;
+  background: #083d6b;
 }
 
-
-/* ===== Footer ===== */
-footer{
-  margin-top:80px;
-  padding-top:25px;
-  border-top:1px solid #eee;
-  text-align:center;
-  font-size:13px;
-  color:#555;
+footer {
+  margin-top: 70px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+  text-align: center;
 }
 
-.partner img{
-  height:12px;
-  vertical-align:middle;
+.footer-credit {
+  font-size: 13px;
+  color: #555;
 }
 
-/* ===== Responsive ===== */
-@media(max-width:1100px){
-  .news-grid{ grid-template-columns:repeat(2,1fr); }
+.partner img {
+  height: 14px;
+  vertical-align: middle;
 }
 
-@media(max-width:700px){
-  .news-grid{ grid-template-columns:1fr; }
-  .header-bar{ grid-template-columns:1fr; text-align:center; gap:15px; }
-  .library-photo{ height:200px; }
-  .button-group{ flex-direction:column; }
+/* Responsive */
+@media (max-width: 768px) {
+
+  .header-bar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .header-left,
+  .header-right {
+    width: auto;
+    justify-content: center;
+  }
+
+  .library-photo {
+    height: 200px;
+  }
+
+  .news-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .news-cover {
+    margin: 0 auto;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
 }
 </style>
 </head>
@@ -192,15 +238,20 @@ footer{
 <body>
 <div class="container">
 
+<!-- HEADER -->
 <div class="header-bar">
-  <div class="header-logo left">
+  <div class="header-left">
     <img src="assets/logos/ESCD_logo.png">
   </div>
-  <div class="header-title">
+
+  <div class="header-center">
     <h1>Maadi Public Library (مكتبة المعادي العامة)</h1>
-    <div class="subtitle">Monthly Newsletter Archive (أرشيف النشرة الشهرية)</div>
+    <div class="subtitle">
+      Monthly Newsletter Archive (أرشيف النشرة الشهرية)
+    </div>
   </div>
-  <div class="header-logo right">
+
+  <div class="header-right">
     <img src="assets/logos/Maadi_Public_Library_logo.png">
   </div>
 </div>
@@ -211,92 +262,88 @@ footer{
   <img src="assets/images/library.png">
 </div>
 
-<!-- ===== 실제 발행본만 유지 ===== -->
 <div id="all-news">
 
-<div class="news-card" data-date="2026-01">
-  <div class="news-cover">
-    <a href="viewer/2026-01-ar_view.html" target="_blank">
-      <img src="assets/covers/2026-01-cover.jpg">
-    </a>
-  </div>
-  <div class="news-content">
-    <strong>January 2026 Maadi Public Library Newsletter</strong>
-    <span class="ar-title">
-      يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة
-    </span>
-    <div class="button-group">
-      <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">View</a>
-      <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>Download</a>
+  <div class="news-card" data-date="2026-01">
+    <div class="news-cover">
+      <a href="viewer/2026-01-ar_view.html" target="_blank">
+        <img src="assets/covers/2026-01-cover.jpg">
+      </a>
+    </div>
+    <div class="news-content">
+      <strong>January 2026 – Maadi Public Library Newsletter</strong>
+      <span class="ar-title">يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة</span>
+      <div class="button-group">
+        <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
+        <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>⬇ Download</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="news-card" data-date="2025-12">
-  <div class="news-cover">
-    <a href="viewer/2025-12-ar_view.html" target="_blank">
-      <img src="assets/covers/2025-12-cover.jpg">
-    </a>
-  </div>
-  <div class="news-content">
-    <strong>December 2025 Maadi Public Library Newsletter</strong>
-    <span class="ar-title">
-      ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة
-    </span>
-    <div class="button-group">
-      <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">View</a>
-      <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>Download</a>
+  <div class="news-card" data-date="2025-12">
+    <div class="news-cover">
+      <a href="viewer/2025-12-ar_view.html" target="_blank">
+        <img src="assets/covers/2025-12-cover.jpg">
+      </a>
+    </div>
+    <div class="news-content">
+      <strong>December 2025 – Maadi Public Library Newsletter</strong>
+      <span class="ar-title">ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة</span>
+      <div class="button-group">
+        <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
+        <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>⬇ Download</a>
+      </div>
     </div>
   </div>
-</div>
 
 </div>
 
 <footer>
+<p class="footer-credit">
 This publication is produced in collaboration with
-<span class="partner">
-<a href="https://www.koica.go.kr/sites/koica_en/index.do" target="_blank">
+<a href="https://www.koica.go.kr/sites/koica_en/index.do"
+   target="_blank">
 <img src="assets/logos/KOICA_logo_s.png">
 </a>
-</span>
+</p>
 </footer>
 
 </div>
 
 <script>
-/* ===== AUTO SORT + YEAR GROUPING ===== */
-const container=document.getElementById("all-news");
-const cards=Array.from(container.querySelectorAll(".news-card"));
+const container = document.getElementById("all-news");
+const cards = Array.from(container.querySelectorAll(".news-card"));
 
-cards.sort((a,b)=>b.dataset.date.localeCompare(a.dataset.date));
+cards.sort((a, b) => b.dataset.date.localeCompare(a.dataset.date));
 
-const grouped={};
+const grouped = {};
 
-cards.forEach(card=>{
-  const year=card.dataset.date.split("-")[0];
-  if(!grouped[year]) grouped[year]=[];
+cards.forEach(card => {
+  const year = card.dataset.date.split("-")[0];
+  if (!grouped[year]) grouped[year] = [];
   grouped[year].push(card);
 });
 
-container.innerHTML="";
+container.innerHTML = "";
 
-Object.keys(grouped).sort((a,b)=>b-a).forEach(year=>{
-  const section=document.createElement("div");
-  section.className="year-section";
+Object.keys(grouped).sort((a, b) => b - a).forEach(year => {
 
-  const title=document.createElement("div");
-  title.className="year-title";
-  title.textContent=year;
+  const yearSection = document.createElement("div");
+  yearSection.className = "year-section";
 
-  const grid=document.createElement("div");
-  grid.className="news-grid";
+  const title = document.createElement("div");
+  title.className = "year-title";
+  title.textContent = year;
 
-  grouped[year].forEach(card=>grid.appendChild(card));
+  const grid = document.createElement("div");
+  grid.className = "news-grid";
 
-  section.appendChild(title);
-  section.appendChild(grid);
+  grouped[year].forEach(card => grid.appendChild(card));
 
-  container.appendChild(section);
+  yearSection.appendChild(title);
+  yearSection.appendChild(grid);
+
+  container.appendChild(yearSection);
 });
 </script>
 
