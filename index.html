@@ -31,7 +31,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
 .header-left,
@@ -60,24 +60,25 @@ body{
   color:var(--dark-blue);
 }
 
-/* ===== ARCHIVE TITLE BAR ===== */
+/* ===== ARCHIVE BAR ===== */
 .archive-bar{
-  margin-top:18px;
+  margin-top:16px;
   text-align:center;
   font-size:22px;
   font-weight:700;
   background:var(--primary-blue);
   color:#fff;
-  padding:14px 0;
+  padding:12px 0;
   border-radius:6px;
 }
 
 /* ===== LIBRARY PHOTO ===== */
 .library-photo{
-  margin-top:28px;
-  height:240px;
+  margin-top:24px;
+  height:230px;
   border-radius:10px;
   overflow:hidden;
+  margin-bottom:35px;  /* ↓ 간격 줄임 */
 }
 
 .library-photo img{
@@ -88,7 +89,7 @@ body{
 
 /* ===== YEAR ===== */
 .year-section{
-  margin-top:60px;
+  margin-top:30px;  /* ↓ 간격 줄임 */
 }
 
 .year-title{
@@ -96,26 +97,26 @@ body{
   font-weight:700;
   color:var(--dark-blue);
   border-bottom:3px solid var(--primary-blue);
-  padding-bottom:8px;
-  margin-bottom:22px;
+  padding-bottom:6px;
+  margin-bottom:18px;
 }
 
 /* ===== GRID ===== */
 .news-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:28px;
+  gap:22px; /* ↓ 간격 줄임 */
 }
 
 /* ===== CARD ===== */
 .news-card{
   display:flex;
   align-items:center;
-  gap:16px;
-  padding:16px;
+  gap:12px; /* ↓ 썸네일과 텍스트 간격 줄임 */
+  padding:14px 16px;
   border-radius:10px;
   background:#f9fafc;
-  box-shadow:0 4px 16px rgba(0,0,0,0.05);
+  box-shadow:0 4px 14px rgba(0,0,0,0.05);
   transition:.2s ease;
 }
 
@@ -124,9 +125,9 @@ body{
   box-shadow:0 8px 22px rgba(0,0,0,0.08);
 }
 
-/* 썸네일 다시 작게 */
+/* 썸네일 조금 더 크게 */
 .news-cover{
-  width:80px;
+  width:100px;   /* ↑ 80 → 100 */
   flex-shrink:0;
   aspect-ratio:3/4;
   border-radius:6px;
@@ -150,11 +151,11 @@ body{
   flex-direction:column;
   align-items:center;
   text-align:center;
-  gap:8px;
+  gap:6px;
 }
 
 .month{
-  font-size:17px;
+  font-size:18px;
   font-weight:700;
   color:var(--dark-blue);
 }
@@ -174,15 +175,16 @@ body{
 }
 
 .button{
-  font-size:12px;
-  padding:6px 12px;
+  font-size:13px;
+  padding:7px 18px;  /* ↑ 가로 확장 */
   border-radius:6px;
   background:var(--primary-blue);
   color:#fff !important;
   text-decoration:none;
   font-weight:600;
   transition:.2s ease;
-  min-width:80px;
+  min-width:110px;  /* ↑ 버튼 가로 길이 증가 */
+  text-align:center;
 }
 
 .button:hover{
@@ -191,8 +193,8 @@ body{
 
 /* ===== FOOTER ===== */
 footer{
-  margin-top:70px;
-  padding-top:25px;
+  margin-top:60px;
+  padding-top:20px;
   border-top:1px solid #eee;
   text-align:center;
 }
@@ -237,7 +239,7 @@ footer{
   }
 
   .library-photo{
-    height:200px;
+    height:190px;
   }
 }
 </style>
@@ -333,7 +335,6 @@ cards.forEach(card=>{
 container.innerHTML="";
 
 Object.keys(grouped).sort((a,b)=>b-a).forEach(year=>{
-
   const section=document.createElement("div");
   section.className="year-section";
 
