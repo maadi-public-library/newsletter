@@ -88,14 +88,14 @@ section h2 {
   margin-bottom: 30px;
 }
 
-/* ===== Year Grid ===== */
+/* ===== Grid ===== */
 .news-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
 }
 
-/* ===== Newsletter Card ===== */
+/* ===== Card ===== */
 .news-card {
   display: grid;
   grid-template-columns: 140px 1fr;
@@ -119,22 +119,12 @@ section h2 {
   height: 200px;
   overflow: hidden;
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.news-cover a {
-  display: block;
 }
 
 .news-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.2s ease;
-}
-
-.news-cover:hover img {
-  transform: scale(1.03);
 }
 
 /* Content */
@@ -151,16 +141,20 @@ section h2 {
   color: #444;
 }
 
-/* Buttons */
+/* Buttons (간격 개선 핵심) */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 a.button {
-  display: inline-block;
   padding: 9px 16px;
   background: var(--primary-blue);
   color: #fff;
   text-decoration: none;
   font-weight: 500;
   border-radius: 5px;
-  margin-right: 10px;
   transition: background 0.2s ease;
 }
 
@@ -191,34 +185,6 @@ footer {
   height: 12px;
 }
 
-/* ===== Download Loader ===== */
-#download-loading {
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.9);
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  font-size: 14px;
-  color: #1F3C6D;
-}
-
-.spinner {
-  width: 36px;
-  height: 36px;
-  border: 4px solid #dce3ec;
-  border-top-color: var(--primary-blue);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 12px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
   .news-grid {
@@ -235,9 +201,8 @@ footer {
     height: 200px;
   }
 
-  a.button {
-    display: block;
-    margin: 8px 0;
+  .button-group {
+    flex-direction: column;
   }
 }
 </style>
@@ -246,10 +211,9 @@ footer {
 <body>
 <div class="container">
 
-<!-- Header -->
 <div class="header-bar">
   <div class="header-logo left">
-    <img src="assets/logos/ESCD_logo.png" alt="ESCD Logo">
+    <img src="assets/logos/ESCD_logo.png">
   </div>
 
   <div class="header-title">
@@ -260,86 +224,51 @@ footer {
   </div>
 
   <div class="header-logo right">
-    <img src="assets/logos/Maadi_Public_Library_logo.png"
-         alt="Maadi Public Library Logo">
+    <img src="assets/logos/Maadi_Public_Library_logo.png">
   </div>
 </div>
 
 <div class="section-divider"></div>
 
 <div class="library-photo">
-  <img src="assets/images/library.png"
-       alt="Exterior view of Maadi Public Library">
+  <img src="assets/images/library.png">
 </div>
 
-<!-- ===== 2025 ===== -->
+<!-- ===== ALL CARDS IN ONE GRID ===== -->
 <section>
-<h2>2025</h2>
+<h2>Newsletter Archive</h2>
 
-<div class="news-grid">
+<div class="news-grid" id="news-container">
 
-<div class="news-card">
+<div class="news-card" data-date="2025-12">
   <div class="news-cover">
     <a href="viewer/2025-12-ar_view.html" target="_blank">
-      <img src="assets/covers/2025-12-cover.jpg"
-           alt="December 2025 Newsletter Cover">
+      <img src="assets/covers/2025-12-cover.jpg">
     </a>
   </div>
-
   <div class="news-content">
     <strong>December 2025 - Maadi Public Library Newsletter</strong>
-    <span class="ar-title">
-      ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة
-    </span>
-
-    <a class="button"
-       href="viewer/2025-12-ar_view.html"
-       target="_blank">
-      🔍 View (Online)
-    </a>
-
-    <a class="button download-btn"
-       href="2025/12/maadi-2025-12-newsletter-ar_down.pdf"
-       download>
-      ⬇ Download (PDF)
-    </a>
+    <span class="ar-title">ديسمبر 2025 – النشرة الشهرية لمكتبة المعادي العامة</span>
+    <div class="button-group">
+      <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
+      <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>⬇ Download</a>
+    </div>
   </div>
 </div>
 
-</div>
-</section>
-
-<!-- ===== 2026 ===== -->
-<section>
-<h2>2026</h2>
-
-<div class="news-grid">
-
-<div class="news-card">
+<div class="news-card" data-date="2026-01">
   <div class="news-cover">
     <a href="viewer/2026-01-ar_view.html" target="_blank">
-      <img src="assets/covers/2026-01-cover.jpg"
-           alt="January 2026 Newsletter Cover">
+      <img src="assets/covers/2026-01-cover.jpg">
     </a>
   </div>
-
   <div class="news-content">
     <strong>January 2026 - Maadi Public Library Newsletter</strong>
-    <span class="ar-title">
-      يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة
-    </span>
-
-    <a class="button"
-       href="viewer/2026-01-ar_view.html"
-       target="_blank">
-      🔍 View (Online)
-    </a>
-
-    <a class="button download-btn"
-       href="2026/01/maadi-2026-01-newsletter-ar_down.pdf"
-       download>
-      ⬇ Download (PDF)
-    </a>
+    <span class="ar-title">يناير 2026 – النشرة الشهرية لمكتبة المعادي العامة</span>
+    <div class="button-group">
+      <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
+      <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>⬇ Download</a>
+    </div>
   </div>
 </div>
 
@@ -351,9 +280,8 @@ footer {
 This publication is produced in collaboration with
 <span class="partner">
 <a href="https://www.koica.go.kr/sites/koica_en/index.do"
-   target="_blank"
-   rel="noopener noreferrer">
-<img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
+   target="_blank">
+<img src="assets/logos/KOICA_logo_s.png">
 </a>
 </span>
 </p>
@@ -361,20 +289,16 @@ This publication is produced in collaboration with
 
 </div>
 
-<!-- Download Loader -->
-<div id="download-loading">
-<div class="spinner"></div>
-<div>Preparing download…</div>
-</div>
-
 <script>
-document.querySelectorAll(".download-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const loader = document.getElementById("download-loading");
-    loader.style.display = "flex";
-    setTimeout(() => loader.style.display = "none", 3000);
-  });
+/* ===== AUTO SORT BY LATEST DATE ===== */
+const container = document.getElementById("news-container");
+const cards = Array.from(container.querySelectorAll(".news-card"));
+
+cards.sort((a, b) => {
+  return b.dataset.date.localeCompare(a.dataset.date);
 });
+
+cards.forEach(card => container.appendChild(card));
 </script>
 
 </body>
