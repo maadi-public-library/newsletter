@@ -201,6 +201,25 @@ footer {
   vertical-align: middle;
 }
 
+
+  .footer-partner {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+}
+
+.footer-partner img {
+  height: 14px;   /* ← 여기서 크기 조절 가능 */
+  width: auto;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+}
+
+.footer-partner img:hover {
+  opacity: 0.8;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
 
@@ -299,14 +318,18 @@ footer {
 </div>
 
 <footer>
-<p class="footer-credit">
-This publication is produced in collaboration with
-<a href="https://www.koica.go.kr/sites/koica_en/index.do"
-   target="_blank">
-<img src="assets/logos/KOICA_logo_s.png">
-</a>
-</p>
+  <p class="footer-credit">
+    This publication is produced in collaboration with
+    <span class="footer-partner">
+      <a href="https://www.koica.go.kr/sites/koica_en/index.do"
+         target="_blank"
+         rel="noopener noreferrer">
+        <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
+      </a>
+    </span>
+  </p>
 </footer>
+
 
 </div>
 
