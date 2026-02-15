@@ -23,38 +23,26 @@ body {
   max-width: 1000px;
   margin: 0 auto;
   background: #ffffff;
-  padding: 30px 20px 60px;
+  padding: 40px 20px 70px;
 }
 
-/* ===== HEADER (완전 안정형) ===== */
+/* ===== HEADER ===== */
 .header-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-/* 좌우 로고 영역 고정폭 */
 .header-left,
 .header-right {
-  width: 180px;
+  width: 170px;
   display: flex;
   align-items: center;
 }
 
-.header-left {
-  justify-content: flex-start;
-}
-
-.header-right {
-  justify-content: flex-end;
-}
-
-/* 중앙 타이틀 */
-.header-center {
-  flex: 1;
-  text-align: center;
-}
+.header-left { justify-content: flex-start; }
+.header-right { justify-content: flex-end; }
 
 .header-left img,
 .header-right img {
@@ -62,43 +50,31 @@ body {
   width: auto;
 }
 
-/* 제목 */
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
 .header-center h1 {
   margin: 0;
   font-size: 34px;
   color: var(--dark-blue);
 }
 
-.header-center .subtitle {
-  margin-top: 6px;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--dark-blue);
-}
-
-/* Divider */
-.section-divider {
-  height: 18px;
+/* ===== BLUE BAR TITLE ===== */
+.archive-bar {
   background: var(--primary-blue);
-  border-radius: 4px;
-  margin: 18px 0 20px;
-}
-
-/* Library photo */
-.library-photo {
-  height: 260px;
-  overflow: hidden;
-  border-radius: 8px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 14px 10px;
+  border-radius: 6px;
   margin-bottom: 50px;
+  line-height: 1.4;
 }
 
-.library-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Year section */
+/* ===== YEAR ===== */
 .year-section {
   margin-bottom: 60px;
 }
@@ -112,14 +88,13 @@ body {
   margin-bottom: 30px;
 }
 
-/* Card grid */
+/* ===== CARD ===== */
 .news-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 30px;
 }
 
-/* Card */
 .news-card {
   display: grid;
   grid-template-columns: 150px 1fr;
@@ -159,14 +134,16 @@ body {
 .news-content .ar-title {
   font-size: 14px;
   color: #555;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   display: block;
 }
 
+/* ===== BUTTONS (세로 배치) ===== */
 .button-group {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  flex-wrap: wrap;
+  max-width: 180px;
 }
 
 a.button {
@@ -177,6 +154,7 @@ a.button {
   background: var(--primary-blue);
   color: #fff !important;
   text-decoration: none;
+  text-align: center;
   transition: 0.2s ease;
 }
 
@@ -184,6 +162,7 @@ a.button:hover {
   background: #083d6b;
 }
 
+/* ===== FOOTER ===== */
 footer {
   margin-top: 70px;
   padding-top: 25px;
@@ -194,33 +173,23 @@ footer {
 .footer-credit {
   font-size: 13px;
   color: #555;
-}
-
-.partner img {
-  height: 14px;
-  vertical-align: middle;
-}
-
-
-  .footer-partner {
   display: inline-flex;
   align-items: center;
-  margin-left: 6px;
+  gap: 6px;
 }
 
-.footer-partner img {
-  height: 12px;   /* ← 여기서 크기 조절 가능 */
+.footer-credit img {
+  height: 14px;
   width: auto;
   vertical-align: middle;
   transition: opacity 0.2s ease;
 }
 
-.footer-partner img:hover {
+.footer-credit img:hover {
   opacity: 0.8;
 }
 
-
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
 
   .header-bar {
@@ -234,10 +203,6 @@ footer {
     justify-content: center;
   }
 
-  .library-photo {
-    height: 200px;
-  }
-
   .news-card {
     grid-template-columns: 1fr;
     text-align: center;
@@ -248,7 +213,7 @@ footer {
   }
 
   .button-group {
-    justify-content: center;
+    margin: 0 auto;
   }
 }
 </style>
@@ -264,8 +229,7 @@ footer {
   </div>
 
   <div class="header-center">
-    <h1>Maadi Public Library <br> (مكتبة المعادي العامة)</h1>
-   
+    <h1>Maadi Public Library (مكتبة المعادي العامة)</h1>
   </div>
 
   <div class="header-right">
@@ -273,12 +237,13 @@ footer {
   </div>
 </div>
 
-<div class="section-divider"></div>
+<!-- BLUE BAR -->
+<div class="archive-bar">
+  Monthly Newsletter Archive <br>
+  (أرشيف النشرة الشهرية)
+</div>
 
- <div class="subtitle">
-      Monthly Newsletter Archive  <br> (أرشيف النشرة الشهرية)
-    </div>
-
+<!-- NEWS CARDS -->
 <div id="all-news">
 
   <div class="news-card" data-date="2026-01">
@@ -288,8 +253,8 @@ footer {
       </a>
     </div>
     <div class="news-content">
-      <strong>January 2026</strong> <br> 
-      <span class="ar-title">يناير 2026 <br> </span>
+      <strong>January 2026</strong>
+      <span class="ar-title">يناير 2026</span>
       <div class="button-group">
         <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
         <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>⬇ Download</a>
@@ -304,8 +269,8 @@ footer {
       </a>
     </div>
     <div class="news-content">
-      <strong>December 2025</strong> <br>
-      <span class="ar-title">ديسمبر 2025 <br> </span>
+      <strong>December 2025</strong>
+      <span class="ar-title">ديسمبر 2025</span>
       <div class="button-group">
         <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
         <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>⬇ Download</a>
@@ -318,55 +283,14 @@ footer {
 <footer>
   <p class="footer-credit">
     This publication is produced in collaboration with
-    <span class="footer-partner">
-      <a href="https://www.koica.go.kr/sites/koica_en/index.do"
-         target="_blank"
-         rel="noopener noreferrer">
-        <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
-      </a>
-    </span>
+    <a href="https://www.koica.go.kr/sites/koica_en/index.do"
+       target="_blank"
+       rel="noopener noreferrer">
+      <img src="assets/logos/KOICA_logo_s.png" alt="KOICA">
+    </a>
   </p>
 </footer>
 
-
 </div>
-
-<script>
-const container = document.getElementById("all-news");
-const cards = Array.from(container.querySelectorAll(".news-card"));
-
-cards.sort((a, b) => b.dataset.date.localeCompare(a.dataset.date));
-
-const grouped = {};
-
-cards.forEach(card => {
-  const year = card.dataset.date.split("-")[0];
-  if (!grouped[year]) grouped[year] = [];
-  grouped[year].push(card);
-});
-
-container.innerHTML = "";
-
-Object.keys(grouped).sort((a, b) => b - a).forEach(year => {
-
-  const yearSection = document.createElement("div");
-  yearSection.className = "year-section";
-
-  const title = document.createElement("div");
-  title.className = "year-title";
-  title.textContent = year;
-
-  const grid = document.createElement("div");
-  grid.className = "news-grid";
-
-  grouped[year].forEach(card => grid.appendChild(card));
-
-  yearSection.appendChild(title);
-  yearSection.appendChild(grid);
-
-  container.appendChild(yearSection);
-});
-</script>
-
 </body>
 </html>
