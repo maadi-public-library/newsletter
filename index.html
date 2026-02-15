@@ -171,6 +171,20 @@ footer {
   height: 12px;
 }
 
+.news-cover a {
+  display: block;
+  cursor: pointer;
+}
+
+.news-cover img {
+  transition: transform 0.2s ease;
+}
+
+.news-cover:hover img {
+  transform: scale(1.03);
+}
+
+  
 /* ===== Download Loading Overlay ===== */
 #download-loading {
   position: fixed;
@@ -257,9 +271,13 @@ footer {
 <h2>2025</h2>
 
 <div class="news-card">
-  <div class="news-cover">
-    <img src="assets/covers/2025-12-cover.jpg" alt="December 2025 Newsletter Cover">
-  </div>
+<div class="news-cover">
+  <a href="viewer/2025-12-ar_view.html" target="_blank">
+    <img src="assets/covers/2025-12-cover.jpg"
+         alt="December 2025 Newsletter Cover">
+  </a>
+</div>
+
 
   <div class="news-content">
     <strong>December 2025 - Maadi Public Library Newsletter</strong>
@@ -284,8 +302,12 @@ footer {
 
 <div class="news-card">
   <div class="news-cover">
-    <img src="assets/covers/2026-01-cover.jpg" alt="January 2026 Newsletter Cover">
-  </div>
+  <a href="viewer/2026-01-ar_view.html" target="_blank">
+    <img src="assets/covers/2026-01-cover.jpg"
+         alt="January 2026 Newsletter Cover">
+  </a>
+</div>
+
 
   <div class="news-content">
     <strong>January 2026 - Maadi Public Library Newsletter</strong>
