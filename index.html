@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   background: #ffffff;
   padding: 30px 20px 60px;
@@ -65,7 +65,7 @@ body {
   height: 260px;
   overflow: hidden;
   border-radius: 6px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .library-photo img {
@@ -76,45 +76,46 @@ body {
 
 /* ===== Year Section ===== */
 .year-section {
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 }
 
 .year-title {
-  font-size: 22px;
+  font-size: 28px;
+  font-weight: 800;
   color: var(--dark-blue);
-  border-bottom: 3px solid var(--primary-blue);
+  margin-bottom: 28px;
   padding-bottom: 8px;
-  margin-bottom: 30px;
+  border-bottom: 4px solid var(--primary-blue);
 }
 
 /* ===== Grid ===== */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
 }
 
 /* ===== Card ===== */
 .news-card {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 18px;
+  grid-template-columns: 100px 1fr;
+  gap: 14px;
   align-items: flex-start;
-  padding: 16px;
+  padding: 14px;
   border: 1px solid #eee;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fafafa;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .news-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .news-cover {
-  width: 120px;
-  height: 165px;
+  width: 100px;
+  height: 140px;
   overflow: hidden;
   border-radius: 6px;
 }
@@ -127,25 +128,26 @@ body {
 
 .news-content strong {
   display: block;
-  font-size: 17px;
-  margin-bottom: 6px;
+  font-size: 15px;
+  margin-bottom: 4px;
 }
 
 .news-content .ar-title {
   display: block;
-  font-size: 14px;
-  margin-bottom: 16px;
+  font-size: 13px;
+  margin-bottom: 12px;
   color: #444;
 }
 
 .button-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 a.button {
-  padding: 9px 16px;
+  padding: 6px 12px;
+  font-size: 13px;
   background: var(--primary-blue);
   color: #fff;
   text-decoration: none;
@@ -160,7 +162,7 @@ a.button:hover {
 
 /* ===== Footer ===== */
 footer {
-  margin-top: 60px;
+  margin-top: 80px;
   padding-top: 25px;
   border-top: 1px solid #eee;
   text-align: center;
@@ -182,7 +184,14 @@ footer {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+
   .news-grid {
     grid-template-columns: 1fr;
   }
@@ -228,7 +237,7 @@ footer {
   <img src="assets/images/library.png">
 </div>
 
-<!-- ===== All cards go here ONLY ===== -->
+<!-- ===== All cards go here ===== -->
 <div id="all-news">
 
 <div class="news-card" data-date="2025-12">
@@ -238,8 +247,10 @@ footer {
     </a>
   </div>
   <div class="news-content">
-    <strong>December 2025 <br> Maadi Public Library Newsletter</strong>
-    <span class="ar-title">ديسمبر 2025 <br>  النشرة الشهرية لمكتبة المعادي العامة</span>
+    <strong>December 2025<br>Maadi Public Library Newsletter</strong>
+    <span class="ar-title">
+      ديسمبر 2025<br>النشرة الشهرية لمكتبة المعادي العامة
+    </span>
     <div class="button-group">
       <a class="button" href="viewer/2025-12-ar_view.html" target="_blank">🔍 View</a>
       <a class="button" href="2025/12/maadi-2025-12-newsletter-ar_down.pdf" download>⬇ Download</a>
@@ -254,8 +265,10 @@ footer {
     </a>
   </div>
   <div class="news-content">
-    <strong>January 2026 <br> Maadi Public Library Newsletter</strong>
-    <span class="ar-title">يناير 2026  <br> النشرة الشهرية لمكتبة المعادي العامة</span>
+    <strong>January 2026<br>Maadi Public Library Newsletter</strong>
+    <span class="ar-title">
+      يناير 2026<br>النشرة الشهرية لمكتبة المعادي العامة
+    </span>
     <div class="button-group">
       <a class="button" href="viewer/2026-01-ar_view.html" target="_blank">🔍 View</a>
       <a class="button" href="2026/01/maadi-2026-01-newsletter-ar_down.pdf" download>⬇ Download</a>
@@ -269,8 +282,7 @@ footer {
 <p class="footer-credit">
 This publication is produced in collaboration with
 <span class="partner">
-<a href="https://www.koica.go.kr/sites/koica_en/index.do"
-   target="_blank">
+<a href="https://www.koica.go.kr/sites/koica_en/index.do" target="_blank">
 <img src="assets/logos/KOICA_logo_s.png">
 </a>
 </span>
