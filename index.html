@@ -61,30 +61,30 @@ body{
 }
 
 /* ===== ARCHIVE BAR ===== */
-.archive-bar{
-  margin-top:16px;
-  text-align:center;
-  font-size:22px;
-  font-weight:700;
-  background:var(--primary-blue);
-  color:#fff;
-  padding:12px 0;
-  border-radius:6px;
+.archive-bar {
+  background: var(--primary-blue);
+  color: #fff;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 14px 10px;
+  border-radius: 8px;
+  margin: 20px 0 6px;   /* ← 아래 여백 6px */
 }
+
 
 /* ===== LIBRARY PHOTO ===== */
-.library-photo{
-  margin-top:24px;
-  height:230px;
-  border-radius:10px;
-  overflow:hidden;
-  margin-bottom:35px;  /* ↓ 간격 줄임 */
+.library-photo {
+  width: 100%;
+  margin: 0 0 30px;   /* ← 위 여백 제거 */
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.library-photo img{
+.library-photo img {
   width: 100%;
-  height: auto;
-  object-fit:cover;
+  height: auto;   /* ← 핵심: 안 잘리게 */
+  display: block;
 }
 
 /* ===== YEAR ===== */
@@ -267,9 +267,10 @@ footer{
 </div>
 
 <div class="library-photo">
-  <img src="assets/images/library.png">
+  <img src="assets/images/library.png" alt="Library">
 </div>
 
+  
 <div id="all-news">
 
   <div class="news-card" data-date="2026-01">
