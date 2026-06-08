@@ -37,6 +37,7 @@ ROOT = Path(__file__).parent.parent   # 레포 루트
 cover_pattern = re.compile(r"^(\d{4})-(\d{2})-cover\.(jpg|jpeg|png|webp)$", re.IGNORECASE)
 
 issues = []   # { year, month, cover_ext, has_down, has_view }
+seen = set()  # 중복 방지
 
 covers_dir = ROOT / "assets" / "covers"
 if covers_dir.exists():
@@ -45,6 +46,11 @@ if covers_dir.exists():
         if not m:
             continue
         year, month, ext = m.group(1), m.group(2), m.group(3)
+
+        if (year, month) in seen:
+            print(f"  [skip] Duplicate cover ignored: {f.name}")
+            continue
+        seen.add((year, month))
 
         pdf_dir = ROOT / year / month
         has_down = (pdf_dir / f"maadi-{year}-{month}-newsletter-ar_down.pdf").exists()
@@ -365,4 +371,3 @@ index_path = ROOT / "index.html"
 index_path.write_text(INDEX_HTML, encoding="utf-8")
 print(f"[generate.py] index.html updated with {len(issues)} issues.")
 print("[generate.py] Done ✓")
-
