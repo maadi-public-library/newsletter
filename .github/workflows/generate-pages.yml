@@ -1,0 +1,39 @@
+name: Auto-Generate Newsletter Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/covers/**"
+      - "2025/**"
+      - "2026/**"
+      - "2027/**"
+      - "scripts/**"
+  workflow_dispatch:   # 수동 실행 버튼
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run generator
+        run: python scripts/generate.py
+
+      - name: Commit & Push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html viewer/
+          git diff --cached --quiet || git commit -m "chore: auto-generate pages [skip ci]"
+          git push
