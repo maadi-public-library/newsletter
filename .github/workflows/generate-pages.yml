@@ -9,7 +9,7 @@ on:
       - "2026/**"
       - "2027/**"
       - "scripts/**"
-  workflow_dispatch:   # 수동 실행 버튼
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.12"
 
