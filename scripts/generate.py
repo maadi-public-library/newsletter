@@ -36,10 +36,24 @@ ROOT = Path(__file__).parent.parent   # 레포 루트
 # ── 통계(GoatCounter) 설정 ────────────────────────────────────
 # https://www.goatcounter.com/ 에서 가입 후 받은 사이트 코드를 넣으세요.
 # 예: 사이트 주소가 https://maadi-newsletter.goatcounter.com 이면 코드는 "maadi-newsletter"
-GOATCOUNTER_CODE = "maadi-public-library"  # TODO: 실제 발급받은 코드로 교체
+GOATCOUNTER_CODE = "maadi-public-library"
 GOATCOUNTER_SCRIPT = f"""\
   <script data-goatcounter="https://{GOATCOUNTER_CODE}.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>"""
+
+# 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
+FACEBOOK_TOTAL_VISITOR_OFFSET = 6500  # 전체 방문자수 오프셋
+
+FACEBOOK_OFFSETS = {
+    # "YYYY-MM": (조회수, 다운로드수)
+    "2025-12": (1950, 720),
+    "2026-01": (1022, 501),
+    "2026-02": (2052, 892),
+    "2026-03": (1954, 458),
+    "2026-04": (1580, 351),
+    "2026-05": (1003, 458),
+    "2026-06": (2043, 825),
+}
 
 # ── 1. 커버 이미지 스캔 ──────────────────────────────────────
 cover_pattern = re.compile(r"^(\d{4})-(\d{2})-cover\.(jpg|jpeg|png|webp)$", re.IGNORECASE)
@@ -205,12 +219,15 @@ def card_html(issue):
                 if issue["has_down"] else
                 '<span class="button btn-disabled">Download</span>')
 
-    # GoatCounter 공개 카운터 배지 (Settings → Visitor counter → Public 활성화 필요)
-    view_badge = (f'<img class="stat-badge" alt="views" '
-                  f'src="https://{GOATCOUNTER_CODE}.goatcounter.com/counter/{viewer_href}.svg?no-branding">'
+    # 실측치(GoatCounter) + 페이스북 기존 집계 오프셋을 더해서 표시할 placeholder
+    fb_views, fb_downloads = FACEBOOK_OFFSETS.get(f"{y}-{mo}", (0, 0))
+    view_badge = (f'<span class="stat-badge" '
+                  f'data-gc-path="{viewer_href}" data-gc-offset="{fb_views}" '
+                  f'data-gc-label="👁 views">👁 {fb_views}</span>'
                   if issue["has_view"] else "")
-    down_badge = (f'<img class="stat-badge" alt="downloads" '
-                  f'src="https://{GOATCOUNTER_CODE}.goatcounter.com/counter/download-{y}-{mo}.svg?no-branding">'
+    down_badge = (f'<span class="stat-badge" '
+                  f'data-gc-path="download-{y}-{mo}" data-gc-offset="{fb_downloads}" '
+                  f'data-gc-label="⬇ downloads">⬇ {fb_downloads}</span>'
                   if issue["has_down"] else "")
 
     return f"""\
@@ -302,7 +319,9 @@ body{{
 .month{{font-size:18px;font-weight:700;color:var(--dark-blue);}}
 .month-ar{{font-size:14px;font-weight:650;color:#555;}}
 .button-group{{display:flex;flex-direction:column;gap:6px;align-items:center;}}
-.stat-badge{{height:18px;opacity:.85;}}
+.stat-badge{{font-size:14px;font-weight:700;color:var(--dark-blue);
+             background:#e7f0fb;border:1px solid #cfe0f3;border-radius:14px;
+             padding:5px 14px;display:inline-block;letter-spacing:.2px;}}
 .button{{
   font-size:13px;padding:7px 18px;border-radius:6px;
   background:var(--primary-blue);color:#fff !important;
@@ -341,8 +360,8 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
 
 <div class="archive-bar">Monthly Newsletter Archive (أرشيف النشرة الشهرية)</div>
 <div style="text-align:center;margin:6px 0 20px;">
-  <img class="stat-badge" alt="site visits"
-       src="https://{GOATCOUNTER_CODE}.goatcounter.com/counter/index.html.svg?no-branding">
+  <span class="stat-badge" data-gc-path="TOTAL" data-gc-offset="{FACEBOOK_TOTAL_VISITOR_OFFSET}"
+        data-gc-label="👥 site visits">👥 {FACEBOOK_TOTAL_VISITOR_OFFSET}</span>
 </div>
 
 <div class="library-photo">
@@ -389,6 +408,22 @@ Object.keys(grouped).sort((a,b)=>b-a).forEach(year=>{{
   section.appendChild(grid);
   container.appendChild(section);
 }});
+
+/* 통계: GoatCounter 실측치 + 페이스북 기존 집계 오프셋 합산 표시 */
+(function(){{
+  const badges = document.querySelectorAll(".stat-badge[data-gc-path]");
+  badges.forEach(badge => {{
+    const path = badge.dataset.gcPath;
+    const offset = parseInt(badge.dataset.gcOffset, 10) || 0;
+    const label = badge.dataset.gcLabel;
+    const url = "https://{GOATCOUNTER_CODE}.goatcounter.com/counter/" +
+                encodeURIComponent(path) + ".json";
+    fetch(url).then(r => r.ok ? r.json() : null).then(data => {{
+      const live = data && data.count ? parseInt(String(data.count).replace(/[^0-9]/g,""), 10) : 0;
+      badge.textContent = label + " " + (live + offset).toLocaleString();
+    }}).catch(() => {{ /* 실패 시 페이스북 오프셋만 유지 */ }});
+  }});
+}})();
 </script>
 </body>
 </html>
