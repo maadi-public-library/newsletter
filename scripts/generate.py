@@ -42,17 +42,17 @@ GOATCOUNTER_SCRIPT = f"""\
           async src="//gc.zgo.at/count.js"></script>"""
 
 # 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
-FACEBOOK_TOTAL_VISITOR_OFFSET = 6500  # 전체 방문자수 오프셋
+FACEBOOK_TOTAL_VISITOR_OFFSET = 7500  # 전체 방문자수 오프셋
 
 FACEBOOK_OFFSETS = {
     # "YYYY-MM": (조회수, 다운로드수)
-    "2025-12": (1950, 720),
-    "2026-01": (1022, 501),
-    "2026-02": (2052, 892),
-    "2026-03": (1954, 458),
-    "2026-04": (1580, 351),
-    "2026-05": (1003, 458),
-    "2026-06": (2043, 825),
+    "2025-12": (530, 230),
+    "2026-01": (630, 265),
+    "2026-02": (770, 315),
+    "2026-03": (900, 350),
+    "2026-04": (1020, 385),
+    "2026-05": (1170, 430),
+    "2026-06": (1320, 490),
 }
 
 # ── 1. 커버 이미지 스캔 ──────────────────────────────────────
@@ -223,11 +223,11 @@ def card_html(issue):
     fb_views, fb_downloads = FACEBOOK_OFFSETS.get(f"{y}-{mo}", (0, 0))
     view_badge = (f'<span class="stat-badge" '
                   f'data-gc-path="{viewer_href}" data-gc-offset="{fb_views}" '
-                  f'data-gc-label="👁 views">👁 {fb_views}</span>'
+                  f'data-gc-label="👁">👁 <span class="stat-num">{fb_views:,}</span></span>'
                   if issue["has_view"] else "")
     down_badge = (f'<span class="stat-badge" '
                   f'data-gc-path="download-{y}-{mo}" data-gc-offset="{fb_downloads}" '
-                  f'data-gc-label="⬇ downloads">⬇ {fb_downloads}</span>'
+                  f'data-gc-label="⬇">⬇ <span class="stat-num">{fb_downloads:,}</span></span>'
                   if issue["has_down"] else "")
 
     return f"""\
@@ -322,6 +322,7 @@ body{{
 .stat-badge{{font-size:14px;font-weight:700;color:var(--dark-blue);
              background:#e7f0fb;border:1px solid #cfe0f3;border-radius:14px;
              padding:5px 14px;display:inline-block;letter-spacing:.2px;}}
+.stat-num{{color:#0d6b3a;}}
 .button{{
   font-size:13px;padding:7px 18px;border-radius:6px;
   background:var(--primary-blue);color:#fff !important;
@@ -359,13 +360,14 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
 </div>
 
 <div class="archive-bar">Monthly Newsletter Archive (أرشيف النشرة الشهرية)</div>
-<div style="text-align:center;margin:6px 0 20px;">
-  <span class="stat-badge" data-gc-path="TOTAL" data-gc-offset="{FACEBOOK_TOTAL_VISITOR_OFFSET}"
-        data-gc-label="👥 site visits">👥 {FACEBOOK_TOTAL_VISITOR_OFFSET}</span>
-</div>
 
 <div class="library-photo">
   <img src="assets/images/library_wide.jpg" alt="Maadi Public Library">
+</div>
+
+<div style="text-align:center;margin:0 0 25px;">
+  <span class="stat-badge" data-gc-path="TOTAL" data-gc-offset="{FACEBOOK_TOTAL_VISITOR_OFFSET}"
+        data-gc-label="👥 site visits">👥 <span class="stat-num">{FACEBOOK_TOTAL_VISITOR_OFFSET:,}</span></span>
 </div>
 
 <div id="all-news">
@@ -415,12 +417,12 @@ Object.keys(grouped).sort((a,b)=>b-a).forEach(year=>{{
   badges.forEach(badge => {{
     const path = badge.dataset.gcPath;
     const offset = parseInt(badge.dataset.gcOffset, 10) || 0;
-    const label = badge.dataset.gcLabel;
+    const numEl = badge.querySelector(".stat-num");
     const url = "https://{GOATCOUNTER_CODE}.goatcounter.com/counter/" +
                 encodeURIComponent(path) + ".json";
     fetch(url).then(r => r.ok ? r.json() : null).then(data => {{
       const live = data && data.count ? parseInt(String(data.count).replace(/[^0-9]/g,""), 10) : 0;
-      badge.textContent = label + " " + (live + offset).toLocaleString();
+      if (numEl) numEl.textContent = (live + offset).toLocaleString();
     }}).catch(() => {{ /* 실패 시 페이스북 오프셋만 유지 */ }});
   }});
 }})();
