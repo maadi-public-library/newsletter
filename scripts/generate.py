@@ -16,6 +16,7 @@ generate.py  —  Maadi Public Library Newsletter Auto-Generator
 """
 
 import os, re, json
+import urllib.request, urllib.parse, urllib.error
 from pathlib import Path
 from datetime import datetime
 
@@ -42,18 +43,35 @@ GOATCOUNTER_SCRIPT = f"""\
           async src="//gc.zgo.at/count.js"></script>"""
 
 # 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
-FACEBOOK_TOTAL_VISITOR_OFFSET = 7552  # 전체 방문자수 오프셋
+FACEBOOK_TOTAL_VISITOR_OFFSET = 7500  # 전체 방문자수 오프셋
 
 FACEBOOK_OFFSETS = {
     # "YYYY-MM": (조회수, 다운로드수)
-    "2025-12": (532, 234),
-    "2026-01": (631, 265),
-    "2026-02": (774, 318),
-    "2026-03": (902, 355),
-    "2026-04": (1027, 389),
-    "2026-05": (1171, 432),
-    "2026-06": (1327, 498),
+    "2025-12": (530, 230),
+    "2026-01": (630, 265),
+    "2026-02": (770, 315),
+    "2026-03": (900, 350),
+    "2026-04": (1020, 385),
+    "2026-05": (1170, 430),
+    "2026-06": (1320, 490),
 }
+
+
+def fetch_goatcounter_count(path: str) -> int:
+    """빌드 시점(GitHub Actions)에서 GoatCounter 공개 카운터 API를 직접 호출.
+    인증 불필요(공개 카운터 기능). 브라우저가 아니라 서버가 호출하는 것이라
+    광고 차단기·CORS 문제가 없음. 실패 시 0을 반환해 빌드가 멈추지 않게 함."""
+    url = (f"https://{GOATCOUNTER_CODE}.goatcounter.com/counter/"
+           f"{urllib.parse.quote(path, safe='')}.json")
+    try:
+        with urllib.request.urlopen(url, timeout=8) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        digits = re.sub(r"[^0-9]", "", str(data.get("count", "0")))
+        return int(digits) if digits else 0
+    except Exception as e:
+        print(f"  [warn] GoatCounter fetch failed for '{path}': {e}")
+        return 0
+
 
 # ── 1. 커버 이미지 스캔 ──────────────────────────────────────
 cover_pattern = re.compile(r"^(\d{4})-(\d{2})-cover\.(jpg|jpeg|png|webp)$", re.IGNORECASE)
@@ -219,16 +237,15 @@ def card_html(issue):
                 if issue["has_down"] else
                 '<span class="button btn-disabled">Download</span>')
 
-    # 실측치(GoatCounter) + 페이스북 기존 집계 오프셋을 더해서 표시할 placeholder
+    # 빌드 시점에 GoatCounter 실측치 + 페이스북 기존 집계 오프셋을 더해 고정 숫자로 굽는다
     fb_views, fb_downloads = FACEBOOK_OFFSETS.get(f"{y}-{mo}", (0, 0))
-    view_badge = (f'<span class="stat-badge" '
-                  f'data-gc-path="{viewer_href}" data-gc-offset="{fb_views}" '
-                  f'data-gc-label="👁">👁 <span class="stat-num">{fb_views:,}</span></span>'
-                  if issue["has_view"] else "")
-    down_badge = (f'<span class="stat-badge" '
-                  f'data-gc-path="download-{y}-{mo}" data-gc-offset="{fb_downloads}" '
-                  f'data-gc-label="⬇">⬇ <span class="stat-num">{fb_downloads:,}</span></span>'
-                  if issue["has_down"] else "")
+    view_badge, down_badge = "", ""
+    if issue["has_view"]:
+        total_views = fetch_goatcounter_count(viewer_href) + fb_views
+        view_badge = f'<span class="stat-badge">👁 <span class="stat-num">{total_views:,}</span></span>'
+    if issue["has_down"]:
+        total_downloads = fetch_goatcounter_count(f"download-{y}-{mo}") + fb_downloads
+        down_badge = f'<span class="stat-badge">⬇ <span class="stat-num">{total_downloads:,}</span></span>'
 
     return f"""\
 <div class="news-card" data-date="{y}-{mo}">
@@ -250,6 +267,7 @@ def card_html(issue):
 </div>"""
 
 cards_html = "\n\n".join(card_html(i) for i in issues)
+TOTAL_VISITS = fetch_goatcounter_count("TOTAL") + FACEBOOK_TOTAL_VISITOR_OFFSET
 
 # 생성 시각 주석
 now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
@@ -319,10 +337,12 @@ body{{
 .month{{font-size:18px;font-weight:700;color:var(--dark-blue);}}
 .month-ar{{font-size:14px;font-weight:650;color:#555;}}
 .button-group{{display:flex;flex-direction:column;gap:6px;align-items:center;}}
-.stat-badge{{font-size:14px;font-weight:700;color:var(--dark-blue);
-             background:#e7f0fb;border:1px solid #cfe0f3;border-radius:14px;
-             padding:5px 14px;display:inline-block;letter-spacing:.2px;}}
-.stat-num{{color:#0d6b3a;}}
+.stat-badge{{font-size:16px;font-weight:700;color:var(--dark-blue);
+             background:#e7f0fb;border:1px solid #cfe0f3;border-radius:16px;
+             padding:6px 16px;display:inline-block;letter-spacing:.2px;}}
+.stat-num{{color:#0d6b3a;font-size:19px;font-weight:800;}}
+.stat-badge-lg{{font-size:20px;padding:9px 22px;border-radius:20px;}}
+.stat-badge-lg .stat-num{{font-size:26px;}}
 .button{{
   font-size:13px;padding:7px 18px;border-radius:6px;
   background:var(--primary-blue);color:#fff !important;
@@ -366,8 +386,7 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
 </div>
 
 <div style="text-align:center;margin:0 0 25px;">
-  <span class="stat-badge" data-gc-path="TOTAL" data-gc-offset="{FACEBOOK_TOTAL_VISITOR_OFFSET}"
-        data-gc-label="👥 site visits">👥 <span class="stat-num">{FACEBOOK_TOTAL_VISITOR_OFFSET:,}</span></span>
+  <span class="stat-badge stat-badge-lg">👥 <span class="stat-num">{TOTAL_VISITS:,}</span></span>
 </div>
 
 <div id="all-news">
@@ -410,26 +429,11 @@ Object.keys(grouped).sort((a,b)=>b-a).forEach(year=>{{
   section.appendChild(grid);
   container.appendChild(section);
 }});
-
-/* 통계: GoatCounter 실측치 + 페이스북 기존 집계 오프셋 합산 표시 */
-(function(){{
-  const badges = document.querySelectorAll(".stat-badge[data-gc-path]");
-  badges.forEach(badge => {{
-    const path = badge.dataset.gcPath;
-    const offset = parseInt(badge.dataset.gcOffset, 10) || 0;
-    const numEl = badge.querySelector(".stat-num");
-    const url = "https://{GOATCOUNTER_CODE}.goatcounter.com/counter/" +
-                encodeURIComponent(path) + ".json";
-    fetch(url).then(r => r.ok ? r.json() : null).then(data => {{
-      const live = data && data.count ? parseInt(String(data.count).replace(/[^0-9]/g,""), 10) : 0;
-      if (numEl) numEl.textContent = (live + offset).toLocaleString();
-    }}).catch(() => {{ /* 실패 시 페이스북 오프셋만 유지 */ }});
-  }});
-}})();
 </script>
 </body>
 </html>
 """
+
 
 index_path = ROOT / "index.html"
 index_path.write_text(INDEX_HTML, encoding="utf-8")
