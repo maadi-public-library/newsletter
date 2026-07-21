@@ -43,17 +43,17 @@ GOATCOUNTER_SCRIPT = f"""\
           async src="//gc.zgo.at/count.js"></script>"""
 
 # 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
-FACEBOOK_TOTAL_VISITOR_OFFSET = 7594  # 전체 방문자수 오프셋
+FACEBOOK_TOTAL_VISITOR_OFFSET = 7552  # 전체 방문자수 오프셋
 
 FACEBOOK_OFFSETS = {
     # "YYYY-MM": (조회수, 다운로드수)
-    "2025-12": (537, 239),
-    "2026-01": (641, 269),
-    "2026-02": (790, 326),
-    "2026-03": (936, 367),
-    "2026-04": (1047, 391),
-    "2026-05": (1198, 439),
-    "2026-06": (1342, 502),
+    "2025-12": (532, 234),
+    "2026-01": (631, 265),
+    "2026-02": (774, 318),
+    "2026-03": (902, 355),
+    "2026-04": (1027, 389),
+    "2026-05": (1171, 432),
+    "2026-06": (1327, 498),
 }
 
 
@@ -337,12 +337,12 @@ body{{
 .month{{font-size:18px;font-weight:700;color:var(--dark-blue);}}
 .month-ar{{font-size:14px;font-weight:650;color:#555;}}
 .button-group{{display:flex;flex-direction:column;gap:6px;align-items:center;}}
-.stat-badge{{font-size:16px;font-weight:700;color:var(--dark-blue);
-             background:#e7f0fb;border:1px solid #cfe0f3;border-radius:16px;
-             padding:6px 16px;display:inline-flex;align-items:center;gap:5px;
+.stat-badge{{font-size:11px;font-weight:700;color:var(--dark-blue);
+             background:#e7f0fb;border:1px solid #cfe0f3;border-radius:10px;
+             padding:3px 10px;display:inline-flex;align-items:center;gap:3px;
              letter-spacing:.2px;}}
-.stat-icon{{font-size:19px;line-height:1;}}
-.stat-num{{color:#0d6b3a;font-size:19px;font-weight:800;line-height:1;}}
+.stat-icon{{font-size:11px;line-height:1;}}
+.stat-num{{color:#0d6b3a;font-size:11px;font-weight:800;line-height:1;}}
 .stat-badge-lg{{font-size:20px;padding:9px 22px;border-radius:20px;}}
 .stat-badge-lg .stat-icon{{font-size:26px;}}
 .stat-badge-lg .stat-num{{font-size:26px;}}
