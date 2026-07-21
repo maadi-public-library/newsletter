@@ -9,6 +9,8 @@ on:
       - "2026/**"
       - "2027/**"
       - "scripts/**"
+  schedule:
+    - cron: "0 3 * * *"   # 매일 03:00 UTC(카이로 05:00~06:00) — GoatCounter 통계 자동 갱신용
   workflow_dispatch:
 
 permissions:
