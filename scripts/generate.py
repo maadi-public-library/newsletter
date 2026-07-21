@@ -43,17 +43,17 @@ GOATCOUNTER_SCRIPT = f"""\
           async src="//gc.zgo.at/count.js"></script>"""
 
 # 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
-FACEBOOK_TOTAL_VISITOR_OFFSET = 7500  # 전체 방문자수 오프셋
+FACEBOOK_TOTAL_VISITOR_OFFSET = 7552  # 전체 방문자수 오프셋
 
 FACEBOOK_OFFSETS = {
     # "YYYY-MM": (조회수, 다운로드수)
-    "2025-12": (530, 230),
-    "2026-01": (630, 265),
-    "2026-02": (770, 315),
-    "2026-03": (900, 350),
-    "2026-04": (1020, 385),
-    "2026-05": (1170, 430),
-    "2026-06": (1320, 490),
+    "2025-12": (532, 234),
+    "2026-01": (631, 265),
+    "2026-02": (774, 318),
+    "2026-03": (902, 355),
+    "2026-04": (1027, 389),
+    "2026-05": (1171, 432),
+    "2026-06": (1327, 498),
 }
 
 
@@ -242,10 +242,10 @@ def card_html(issue):
     view_badge, down_badge = "", ""
     if issue["has_view"]:
         total_views = fetch_goatcounter_count(viewer_href) + fb_views
-        view_badge = f'<span class="stat-badge">👁 <span class="stat-num">{total_views:,}</span></span>'
+        view_badge = f'<span class="stat-badge"><span class="stat-icon">👁</span> <span class="stat-num">{total_views:,}</span></span>'
     if issue["has_down"]:
         total_downloads = fetch_goatcounter_count(f"download-{y}-{mo}") + fb_downloads
-        down_badge = f'<span class="stat-badge">⬇ <span class="stat-num">{total_downloads:,}</span></span>'
+        down_badge = f'<span class="stat-badge"><span class="stat-icon">⬇</span> <span class="stat-num">{total_downloads:,}</span></span>'
 
     return f"""\
 <div class="news-card" data-date="{y}-{mo}">
@@ -339,9 +339,12 @@ body{{
 .button-group{{display:flex;flex-direction:column;gap:6px;align-items:center;}}
 .stat-badge{{font-size:16px;font-weight:700;color:var(--dark-blue);
              background:#e7f0fb;border:1px solid #cfe0f3;border-radius:16px;
-             padding:6px 16px;display:inline-block;letter-spacing:.2px;}}
-.stat-num{{color:#0d6b3a;font-size:19px;font-weight:800;}}
+             padding:6px 16px;display:inline-flex;align-items:center;gap:5px;
+             letter-spacing:.2px;}}
+.stat-icon{{font-size:19px;line-height:1;}}
+.stat-num{{color:#0d6b3a;font-size:19px;font-weight:800;line-height:1;}}
 .stat-badge-lg{{font-size:20px;padding:9px 22px;border-radius:20px;}}
+.stat-badge-lg .stat-icon{{font-size:26px;}}
 .stat-badge-lg .stat-num{{font-size:26px;}}
 .button{{
   font-size:13px;padding:7px 18px;border-radius:6px;
@@ -386,7 +389,7 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
 </div>
 
 <div style="text-align:center;margin:0 0 25px;">
-  <span class="stat-badge stat-badge-lg">👥 <span class="stat-num">{TOTAL_VISITS:,}</span></span>
+  <span class="stat-badge stat-badge-lg"><span class="stat-icon">👥</span> <span class="stat-num">{TOTAL_VISITS:,}</span></span>
 </div>
 
 <div id="all-news">
