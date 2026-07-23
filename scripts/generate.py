@@ -262,6 +262,8 @@ for issue in issues:
     print(f"  [viewer] {'Created' if is_new else 'Updated'} {viewer_path.name}")
 
 # ── 3. index.html 재생성 ──────────────────────────────────────
+_live_view_accumulator = []  # TOTAL 키워드 대신 홈페이지+뷰어 실측치를 직접 합산하기 위함
+
 def card_html(issue):
     y, mo = issue["year"], issue["month"]
     cover_src = f"assets/covers/{y}-{mo}-cover.{issue['cover_ext']}"
@@ -280,7 +282,9 @@ def card_html(issue):
     fb_views, fb_downloads = FACEBOOK_OFFSETS.get(f"{y}-{mo}", (0, 0))
     view_badge, down_badge = "", ""
     if issue["has_view"]:
-        total_views = fetch_goatcounter_count(f"{SITE_BASE_PATH}/{viewer_href}") + fb_views
+        live_views = fetch_goatcounter_count(f"{SITE_BASE_PATH}/{viewer_href}")
+        _live_view_accumulator.append(live_views)
+        total_views = live_views + fb_views
         view_badge = f'<span class="stat-badge"><span class="stat-icon">👁</span> <span class="stat-num">{total_views:,}</span></span>'
     if issue["has_down"]:
         total_downloads = fetch_goatcounter_count(f"download-{y}-{mo}") + fb_downloads
@@ -306,9 +310,13 @@ def card_html(issue):
 </div>"""
 
 cards_html = "\n\n".join(card_html(i) for i in issues)
-_total_live = fetch_goatcounter_count("TOTAL")
+# GoatCounter의 'TOTAL' 키워드는 캐시가 최대 4시간까지 지연되어 반영이 늦다.
+# 대신 홈페이지 + 모든 뷰어 페이지 실측치를 직접 더해서 즉시 반영되게 한다.
+_homepage_live = fetch_goatcounter_count(SITE_BASE_PATH)
+_total_live = _homepage_live + sum(_live_view_accumulator)
 TOTAL_VISITS = _total_live + FACEBOOK_TOTAL_VISITOR_OFFSET
-print(f"[generate.py] TOTAL visits: live={_total_live} + fb_offset={FACEBOOK_TOTAL_VISITOR_OFFSET} = {TOTAL_VISITS}")
+print(f"[generate.py] TOTAL visits: homepage={_homepage_live} + views_sum={sum(_live_view_accumulator)} "
+      f"+ fb_offset={FACEBOOK_TOTAL_VISITOR_OFFSET} = {TOTAL_VISITS}")
 
 # 생성 시각 주석
 now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
