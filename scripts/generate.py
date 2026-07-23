@@ -39,6 +39,12 @@ ROOT = Path(__file__).parent.parent   # 레포 루트
 # 예: 사이트 주소가 https://maadi-newsletter.goatcounter.com 이면 코드는 "maadi-newsletter"
 GOATCOUNTER_CODE = "maadi-public-library"
 
+# GitHub Pages 프로젝트 사이트라 실제 URL이 https://<user>.github.io/newsletter/... 형태로
+# "/newsletter" 하위 경로가 항상 붙는다. GoatCounter는 이 전체 경로를 그대로 기록하므로
+# 페이지 조회수를 조회할 때도 이 프리픽스를 붙여줘야 정확히 매칭된다.
+# (다운로드는 커스텀 이벤트 이름이라 이 프리픽스가 붙지 않는다.)
+SITE_BASE_PATH = "/newsletter"
+
 # gc.zgo.at 는 일부 통신망/광고차단기 목록에 올라가 있어 count.js 로딩 자체가
 # 막히는 경우가 있음(카이로 현지 테스트에서 확인됨). 그래서 count.js 파일을
 # gc.zgo.at에서 직접 불러오는 대신, 빌드 시점에 저장소 안으로 내려받아
@@ -87,7 +93,7 @@ def fetch_goatcounter_count(path: str) -> int:
     인증 불필요(공개 카운터 기능). 브라우저가 아니라 서버가 호출하는 것이라
     광고 차단기·CORS 문제가 없음. 실패 시 0을 반환해 빌드가 멈추지 않게 함."""
     url = (f"https://{GOATCOUNTER_CODE}.goatcounter.com/counter/"
-           f"{urllib.parse.quote(path, safe='')}.json")
+           f"{urllib.parse.quote(path, safe='/')}.json")
     try:
         with urllib.request.urlopen(url, timeout=8) as resp:
             data = json.loads(resp.read().decode("utf-8"))
@@ -274,7 +280,7 @@ def card_html(issue):
     fb_views, fb_downloads = FACEBOOK_OFFSETS.get(f"{y}-{mo}", (0, 0))
     view_badge, down_badge = "", ""
     if issue["has_view"]:
-        total_views = fetch_goatcounter_count(viewer_href) + fb_views
+        total_views = fetch_goatcounter_count(f"{SITE_BASE_PATH}/{viewer_href}") + fb_views
         view_badge = f'<span class="stat-badge"><span class="stat-icon">👁</span> <span class="stat-num">{total_views:,}</span></span>'
     if issue["has_down"]:
         total_downloads = fetch_goatcounter_count(f"download-{y}-{mo}") + fb_downloads
