@@ -392,7 +392,7 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
 
 <div style="text-align:center;margin:0 0 25px;">
   <span class="stat-badge stat-badge-lg"><span class="stat-icon">👥</span> <span class="stat-num">{TOTAL_VISITS:,}</span></span>
-  <div class="stat-date">as of {today_str}</div>
+  <div class="stat-date"><b>as of {today_str}</b></div>
 </div>
 
 <div id="all-news">
