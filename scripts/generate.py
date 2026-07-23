@@ -67,7 +67,16 @@ def fetch_goatcounter_count(path: str) -> int:
         with urllib.request.urlopen(url, timeout=8) as resp:
             data = json.loads(resp.read().decode("utf-8"))
         digits = re.sub(r"[^0-9]", "", str(data.get("count", "0")))
-        return int(digits) if digits else 0
+        live = int(digits) if digits else 0
+        print(f"  [goatcounter] '{path}' live={live}")
+        return live
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            # 아직 이 경로에 실제 방문 기록이 없어 카운터 자체가 생성 전인 상태(정상)
+            print(f"  [info] '{path}' has no visits recorded yet (404) — using offset only")
+        else:
+            print(f"  [warn] GoatCounter fetch failed for '{path}': HTTP {e.code}")
+        return 0
     except Exception as e:
         print(f"  [warn] GoatCounter fetch failed for '{path}': {e}")
         return 0
@@ -267,7 +276,9 @@ def card_html(issue):
 </div>"""
 
 cards_html = "\n\n".join(card_html(i) for i in issues)
-TOTAL_VISITS = fetch_goatcounter_count("TOTAL") + FACEBOOK_TOTAL_VISITOR_OFFSET
+_total_live = fetch_goatcounter_count("TOTAL")
+TOTAL_VISITS = _total_live + FACEBOOK_TOTAL_VISITOR_OFFSET
+print(f"[generate.py] TOTAL visits: live={_total_live} + fb_offset={FACEBOOK_TOTAL_VISITOR_OFFSET} = {TOTAL_VISITS}")
 
 # 생성 시각 주석
 now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
