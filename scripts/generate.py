@@ -271,6 +271,7 @@ TOTAL_VISITS = fetch_goatcounter_count("TOTAL") + FACEBOOK_TOTAL_VISITOR_OFFSET
 
 # 생성 시각 주석
 now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+today_str = datetime.utcnow().strftime("%Y-%m-%d")
 
 INDEX_HTML = f"""\
 <!DOCTYPE html>
@@ -346,6 +347,7 @@ body{{
 .stat-badge-lg{{font-size:20px;padding:9px 22px;border-radius:20px;}}
 .stat-badge-lg .stat-icon{{font-size:26px;}}
 .stat-badge-lg .stat-num{{font-size:26px;}}
+.stat-date{{font-size:12px;color:#888;margin-top:4px;}}
 .button{{
   font-size:13px;padding:7px 18px;border-radius:6px;
   background:var(--primary-blue);color:#fff !important;
@@ -390,6 +392,7 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
 
 <div style="text-align:center;margin:0 0 25px;">
   <span class="stat-badge stat-badge-lg"><span class="stat-icon">👥</span> <span class="stat-num">{TOTAL_VISITS:,}</span></span>
+  <div class="stat-date">as of {today_str}</div>
 </div>
 
 <div id="all-news">
