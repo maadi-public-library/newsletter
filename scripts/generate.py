@@ -245,8 +245,7 @@ for issue in issues:
         continue   # 뷰어 PDF 없으면 뷰어 HTML 불필요
     y, mo = issue["year"], issue["month"]
     viewer_path = viewer_dir / f"{y}-{mo}-ar_view.html"
-    if viewer_path.exists():
-        continue   # 이미 있으면 건너뜀 (덮어쓰지 않음)
+    is_new = not viewer_path.exists()
     content = VIEWER_TEMPLATE.format(
         year=y, month=mo,
         month_en=MONTH_EN[mo],
@@ -254,7 +253,7 @@ for issue in issues:
         goatcounter_script=GOATCOUNTER_SCRIPT_VIEWER,
     )
     viewer_path.write_text(content, encoding="utf-8")
-    print(f"  [viewer] Created {viewer_path.name}")
+    print(f"  [viewer] {'Created' if is_new else 'Updated'} {viewer_path.name}")
 
 # ── 3. index.html 재생성 ──────────────────────────────────────
 def card_html(issue):
