@@ -38,9 +38,34 @@ ROOT = Path(__file__).parent.parent   # 레포 루트
 # https://www.goatcounter.com/ 에서 가입 후 받은 사이트 코드를 넣으세요.
 # 예: 사이트 주소가 https://maadi-newsletter.goatcounter.com 이면 코드는 "maadi-newsletter"
 GOATCOUNTER_CODE = "maadi-public-library"
+
+# gc.zgo.at 는 일부 통신망/광고차단기 목록에 올라가 있어 count.js 로딩 자체가
+# 막히는 경우가 있음(카이로 현지 테스트에서 확인됨). 그래서 count.js 파일을
+# gc.zgo.at에서 직접 불러오는 대신, 빌드 시점에 저장소 안으로 내려받아
+# 우리 도메인(GitHub Pages)에서 서빙한다. 데이터 전송 대상(goatcounter.com)은 동일.
+COUNTJS_LOCAL_PATH = ROOT / "assets" / "js" / "count.js"
+
+def refresh_local_countjs():
+    COUNTJS_LOCAL_PATH.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with urllib.request.urlopen("https://gc.zgo.at/count.js", timeout=8) as resp:
+            content = resp.read()
+        COUNTJS_LOCAL_PATH.write_bytes(content)
+        print(f"  [countjs] Refreshed local copy ({len(content)} bytes)")
+    except Exception as e:
+        if COUNTJS_LOCAL_PATH.exists():
+            print(f"  [warn] count.js refresh failed, keeping existing cached copy: {e}")
+        else:
+            print(f"  [warn] count.js download failed and no cached copy exists yet: {e}")
+
+refresh_local_countjs()
+
 GOATCOUNTER_SCRIPT = f"""\
   <script data-goatcounter="https://{GOATCOUNTER_CODE}.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>"""
+          async src="assets/js/count.js"></script>"""
+GOATCOUNTER_SCRIPT_VIEWER = f"""\
+  <script data-goatcounter="https://{GOATCOUNTER_CODE}.goatcounter.com/count"
+          async src="../assets/js/count.js"></script>"""
 
 # 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
 FACEBOOK_TOTAL_VISITOR_OFFSET = 7592  # 전체 방문자수 오프셋
@@ -226,7 +251,7 @@ for issue in issues:
         year=y, month=mo,
         month_en=MONTH_EN[mo],
         month_ar=MONTH_AR[mo],
-        goatcounter_script=GOATCOUNTER_SCRIPT,
+        goatcounter_script=GOATCOUNTER_SCRIPT_VIEWER,
     )
     viewer_path.write_text(content, encoding="utf-8")
     print(f"  [viewer] Created {viewer_path.name}")
