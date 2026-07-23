@@ -315,9 +315,9 @@ body{{
   font-size:22px;font-weight:600;padding:14px 10px;
   border-radius:8px;margin:20px 0 6px;
 }}
-.library-photo{{width:100%;max-height:420px;overflow:hidden;border-radius:8px;margin:0 0 25px;}}
+.library-photo{{width:100%;max-height:420px;overflow:hidden;border-radius:8px;margin:0 0 10px;}}
 .library-photo img{{width:100%;height:auto;display:block;}}
-.year-section{{margin-top:30px;}}
+.year-section{{margin-top:12px;}}
 .year-title{{
   font-size:24px;font-weight:700;color:var(--dark-blue);
   border-bottom:3px solid var(--primary-blue);padding-bottom:6px;margin-bottom:18px;
@@ -347,7 +347,7 @@ body{{
 .stat-badge-lg{{font-size:20px;padding:9px 22px;border-radius:20px;}}
 .stat-badge-lg .stat-icon{{font-size:26px;}}
 .stat-badge-lg .stat-num{{font-size:26px;}}
-.stat-date{{font-size:12px;color:#888;margin-top:4px;}}
+.stat-date{{font-size:13px;font-weight:800;color:var(--dark-blue);margin-top:3px;}}
 .button{{
   font-size:13px;padding:7px 18px;border-radius:6px;
   background:var(--primary-blue);color:#fff !important;
@@ -390,9 +390,9 @@ footer{{margin-top:60px;padding-top:20px;border-top:1px solid #eee;text-align:ce
   <img src="assets/images/library_wide.jpg" alt="Maadi Public Library">
 </div>
 
-<div style="text-align:center;margin:0 0 25px;">
+<div style="text-align:center;margin:0 0 12px;">
   <span class="stat-badge stat-badge-lg"><span class="stat-icon">👥</span> <span class="stat-num">{TOTAL_VISITS:,}</span></span>
-  <div class="stat-date"><b>as of {today_str}</b></div>
+  <div class="stat-date">{today_str}</div>
 </div>
 
 <div id="all-news">
