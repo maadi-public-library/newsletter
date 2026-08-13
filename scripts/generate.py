@@ -165,6 +165,8 @@ VIEWER_TEMPLATE = """\
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 {goatcounter_script}
   <style>
+  <link rel="icon" type="image/x-icon" href="/newsletter/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/newsletter/assets/favicon/favicon-32x32.png">
     html,body{{height:100%;margin:0;overflow:hidden;}}
     body{{background:#f4f6f8;font-family:Arial,sans-serif;display:flex;flex-direction:column;align-items:center;}}
     header{{padding:12px;font-size:16px;font-weight:bold;color:#1F3C6D;}}
