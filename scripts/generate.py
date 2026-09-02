@@ -74,7 +74,7 @@ GOATCOUNTER_SCRIPT_VIEWER = f"""\
           async src="../assets/js/count.js"></script>"""
 
 # 페이스북에서 이미 집계된 기존 조회수/다운로드수 (GoatCounter 실측치에 더해서 표시)
-FACEBOOK_TOTAL_VISITOR_OFFSET = 7992  # 전체 방문자수 오프셋
+FACEBOOK_TOTAL_VISITOR_OFFSET = 9592  # 전체 방문자수 오프셋
 
 FACEBOOK_OFFSETS = {
     # "YYYY-MM": (조회수, 다운로드수)
@@ -86,6 +86,7 @@ FACEBOOK_OFFSETS = {
     "2026-05": (1383, 522),
     "2026-06": (1331, 506),
     "2026-07": (1041, 436),
+    "2026-08": (341, 136),
 }
 
 
